@@ -2,6 +2,8 @@
 	-fx-background-color: fx-primary;
 	-fx-padding: 0;
     -fx-background-insets: 0;
+    -fx-border-radius:0;
+    -fx-background-radius:0;
 }
 
 .tree-cell {

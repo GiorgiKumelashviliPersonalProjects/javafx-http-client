@@ -24,8 +24,8 @@ public class HttpClientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stackPane.setAlignment(contentController.anchorPane, Pos.TOP_RIGHT);
-
-        System.out.println(sidebarController.rootParent);
-        System.out.println(contentController.anchorPane);
+//
+//        System.out.println(sidebarController.rootParent);
+//        System.out.println(contentController.anchorPane);
     }
 }

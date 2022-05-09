@@ -4,6 +4,8 @@
 	-fx-border-color: fx-border-color;
 	-fx-border-style: solid;
 	-fx-border-radius: 0;
+	-fx-background-radius: 0;
+    -fx-background-insets: 0;
 }
 
 .combo-box:hover {

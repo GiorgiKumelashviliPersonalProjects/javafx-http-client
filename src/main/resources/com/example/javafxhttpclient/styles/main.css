@@ -14,3 +14,30 @@
 @import "table.css";
 @import "tabs.css";
 @import "treeview.css";
+
+
+.split-pane {
+	-fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: fx-primary-dim;
+}
+
+.split-pane-divider {
+    -fx-pref-width: 1px;
+    -fx-background-color: fx-light-dimer;
+}
+
+
+.send-button {
+    -fx-background-color: fx-accent;
+    -fx-text-fill:fx-dark;
+    -fx-cursor: hand;
+}
+
+.send-button:hover {
+    -fx-background-color: derive(fx-accent, -20%);
+}
+
+.send-button:focus, .send-button:active, .send-button:pressed {
+    -fx-background-color: derive(fx-accent, -30%);
+}
