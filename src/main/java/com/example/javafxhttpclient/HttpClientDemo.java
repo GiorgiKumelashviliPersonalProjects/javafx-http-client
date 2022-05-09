@@ -21,6 +21,7 @@ public class HttpClientDemo extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(mainStyleResource).toExternalForm());
 
         stage.setTitle("Hello!");
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }

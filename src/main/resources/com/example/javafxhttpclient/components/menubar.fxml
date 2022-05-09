@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <?import javafx.scene.input.KeyCodeCombination?>
 
-<MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+<MenuBar AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0">
     <Menu mnemonicParsing="false" text="File">
         <MenuItem mnemonicParsing="false" text="Menu item with shortcut">
             <accelerator>

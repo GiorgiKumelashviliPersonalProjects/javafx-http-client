@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane fx:id="rootParent"
             fx:controller="com.example.javafxhttpclient.controllers.SidebarController"

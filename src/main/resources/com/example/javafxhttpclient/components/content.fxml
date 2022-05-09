@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
 
 <AnchorPane fx:controller="com.example.javafxhttpclient.controllers.ContentController"
             fx:id="anchorPane"
@@ -8,4 +14,26 @@
             AnchorPane.topAnchor="35"
             AnchorPane.bottomAnchor="0"
             AnchorPane.rightAnchor="0"
-            maxWidth="1000"/>
+            maxWidth="1650">
+    <ComboBox layoutX="141.0" layoutY="76.0" prefHeight="24.0" prefWidth="250.0" promptText="choose">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Apple"/>
+                <String fx:value="Orange"/>
+                <String fx:value="Pear1 Pear1 Pear1 Pear1 Pear1"/>
+                <String fx:value="Pear2 Pear2 Pear2 Pear2 Pear2"/>
+                <String fx:value="Pear3 Pear3 Pear3 Pear3 Pear3"/>
+                <String fx:value="Pear4 Pear4 Pear4 Pear4 Pear4"/>
+                <String fx:value="Pear5 Pear5 Pear5 Pear5 Pear5"/>
+                <String fx:value="Pear6 Pear6 Pear6 Pear6 Pear6"/>
+                <String fx:value="Pear7 Pear7 Pear7 Pear7 Pear7"/>
+                <String fx:value="Pear8 Pear8 Pear8 Pear8 Pear8"/>
+                <String fx:value="Pear9 Pear9 Pear9 Pear9 Pear9"/>
+                <String fx:value="Pear10 Pear10 Pear10 Pear10 Pear10"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <TextField layoutX="27.0" layoutY="201.0" promptText="Enter some text"/>
+    <Button layoutX="29.0" layoutY="76.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="83.0"
+            styleClass="elegant_button" text="inc"/>
+</AnchorPane>
