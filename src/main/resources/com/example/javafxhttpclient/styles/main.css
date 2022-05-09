@@ -1,0 +1,16 @@
+/* First variables */
+@import "variables.css";
+
+/* Then other styles */
+@import "button.css";
+@import "checkbox.css";
+@import "combobox.css";
+@import "contextmenu.css";
+@import "forms.css";
+@import "list.css";
+@import "menu-bar.css";
+@import "radio.css";
+@import "scrollbar.css";
+@import "table.css";
+@import "tabs.css";
+@import "treeview.css";

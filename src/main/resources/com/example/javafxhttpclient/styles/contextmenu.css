@@ -1,0 +1,37 @@
+.context-menu {
+	-fx-padding: 0;
+	-fx-background-color: fx-primary;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 6, 0, 0, 0);
+}
+
+.context-menu .label {
+    -fx-text-fill: fx-light;
+}
+
+.context-menu .menu-item {
+	-fx-padding: 10px 20px;
+}
+
+.context-menu .menu-item:hover,
+.context-menu .menu-item:focused {
+	-fx-background-color: fx-primary-dim;
+}
+
+
+
+
+
+
+/* Misc menu elements */
+/*
+.separator,
+.separator > .line {
+	-fx-background-color: -fx-border;
+}
+.separator:horizontal > .line {
+	Having 1px on the bottom and 0px elsewhere prevents an
+	awkward empty space between the separator and the item above it
+	-fx-border-width: 0 0 1px 0;
+	-fx-border-insets: 0;
+}
+*/

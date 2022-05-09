@@ -1,0 +1,18 @@
+.check-box > .box {
+	-fx-border-width: 1px;
+	-fx-border-color: fx-border-color;
+	-fx-border-radius: 2px;
+	-fx-background-color: fx-primary;
+}
+
+.check-box:hover > .box {
+	-fx-border-color: fx-accent;
+}
+
+.check-box {
+    -fx-text-fill: fx-light;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: fx-accent;
+}

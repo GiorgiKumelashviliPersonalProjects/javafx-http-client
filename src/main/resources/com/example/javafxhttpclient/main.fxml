@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.layout.StackPane?>
+<AnchorPane fx:controller="com.example.javafxhttpclient.HttpClientController"
+            prefHeight="900.0"
+            prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/18"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <fx:include source="components/menubar.fxml"/>
+
+    <StackPane fx:id="stackPane"
+               AnchorPane.topAnchor="35"
+               AnchorPane.bottomAnchor="0"
+               AnchorPane.rightAnchor="0"
+               AnchorPane.leftAnchor="0">
+        <!-- Sidebar controller injected here !!! -->
+        <fx:include fx:id="sidebar" source="components/sidebar.fxml"/>
+
+        <!-- Main content -->
+        <fx:include fx:id="content" source="components/content.fxml"/>
+    </StackPane>
+
+    <!--    <fx:include fx:id="sidebar" source="components/sidebar.fxml"/>-->
+    <!--    <fx:include fx:id="content" source="components/content.fxml"/>-->
+</AnchorPane>

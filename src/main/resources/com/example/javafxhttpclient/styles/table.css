@@ -1,0 +1,44 @@
+.table-view {
+	-fx-border-width: 0;
+	-fx-border-radius: 0;
+	-fx-background-radius: 0;
+	-fx-background-color: fx-primary;
+}
+
+.table-view .column-header-background {
+	-fx-background-color: fx-dark;
+}
+
+.table-row-cell {
+	-fx-background-color: transparent;
+}
+
+.table-cell:focused,
+.table-row-cell:focused {
+	-fx-background-color: fx-primary-dim;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler {
+    -fx-background-color: fx-dark;
+    -fx-border-width: 0.2;
+    -fx-border-color: fx-border-color;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-cell {
+    -fx-text-fill: white;
+    -fx-border-width: 0.2;
+    -fx-border-color: fx-border-color;
+}
+
+.table-view .filler,
+.table-view .corner {
+    -fx-background-color: transparent;
+	-fx-background-insets: 0;
+	-fx-border-color: transparent;
+}

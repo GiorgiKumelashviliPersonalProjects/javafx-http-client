@@ -1,0 +1,18 @@
+* {
+    fx-accent: #ffcc33;
+
+    fx-primary: #4e5052;
+    fx-primary-dim: #3d3e40;
+
+    fx-border-color: #868686d7;
+
+    fx-form-color: #a6a6a6;
+
+    fx-dark: #212121;
+    fx-dark-hover: #545454;
+
+    fx-light: rgba(241, 241, 241, 0.88);
+    fx-light-dim: rgba(241, 241, 241, 0.6);
+}
+
+

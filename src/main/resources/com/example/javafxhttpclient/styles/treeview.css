@@ -1,0 +1,18 @@
+.tree-view {
+	-fx-background-color: fx-primary;
+	-fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.tree-cell {
+    -fx-text-fill: white;
+	-fx-background-color: transparent;
+}
+
+.tree-cell:focused {
+	-fx-background-color: fx-primary-dim;
+}
+
+.tree-cell .arrow {
+    -fx-background-color: white;
+}

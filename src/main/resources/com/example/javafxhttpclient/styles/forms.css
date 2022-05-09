@@ -1,0 +1,127 @@
+* {
+    form-focused: derive(fx-light, -30%);
+}
+
+
+/*=====================
+NORMAL TEXT INPUT
+=====================*/
+
+.text-field {
+	-fx-border-width: 1px;
+
+	-fx-border-radius: 2px;
+	-fx-background-radius: 2px;
+	-fx-background-color: fx-primary;
+
+	-fx-border-color: fx-border-color;
+    -fx-prompt-text-fill: fx-form-color;
+    -fx-text-fill: fx-form-color;
+}
+
+.text-field:focused {
+	-fx-border-color: form-focused;
+	-fx-prompt-text-fill: form-focused;
+
+	-fx-text-fill: fx-light;
+}
+
+/*=====================
+SPINNER
+=====================*/
+
+.spinner {
+    -fx-border-width: 1px;
+
+	-fx-border-radius: 2px;
+	-fx-background-radius: 2px;
+	-fx-background-color: fx-primary;
+
+	-fx-border-color: fx-border-color;
+    -fx-prompt-text-fill: fx-form-color;
+}
+
+
+.spinner .text-field {
+    -fx-text-fill: fx-form-color;
+
+	-fx-background-color: transparent;
+	-fx-background-radius: inherit;
+	-fx-border-width: 0 1px 0 0;
+}
+
+
+.spinner:focused,
+.spinner:contains-focus {
+	-fx-border-color: form-focused;
+    -fx-prompt-text-fill: form-focused;
+
+    -fx-text-fill: fx-light;
+}
+
+.spinner:focused .text-field,
+.spinner:contains-focus .text-field {
+    -fx-text-fill: fx-light;
+}
+
+
+.spinner > .increment-arrow-button,
+.spinner > .decrement-arrow-button {
+	-fx-border-width: 0;
+	-fx-background-color: fx-primary-dim;
+	-fx-background-radius: inherit;
+	-fx-cursor: hand;
+}
+
+.spinner > .increment-arrow-button:hover,
+.spinner > .decrement-arrow-button:hover {
+	-fx-background-color: derive(fx-primary-dim, -30%);
+}
+
+.spinner > .increment-arrow-button > .increment-arrow,
+.spinner > .decrement-arrow-button > .decrement-arrow {
+	-fx-background-color: fx-accent;
+}
+
+/*=====================
+COLOR PICKER
+=====================*/
+
+
+.color-picker {
+	-fx-border-width: 1px;
+
+	-fx-border-radius: 2px;
+	-fx-background-radius: 2px;
+	-fx-background-color: fx-primary;
+
+	-fx-border-color: fx-border-color;
+}
+
+.color-picker .label {
+	-fx-text-fill: white;
+}
+
+.color-picker:hover {
+    -fx-background-color: fx-primary-dim;
+}
+
+.color-picker > .arrow-button > .arrow {
+	-fx-background-color: fx-light-dim;
+}
+
+.color-picker .color-picker-popup {
+	-fx-background-color: fx-primary;
+}
+
+.color-picker .color-palette {
+	-fx-background-color: fx-primary;
+    -fx-border-radius: 0;
+    -fx-prompt-text-fill: green;
+}
+
+/* IMPORTANT if commented then other properties of color picker will be back */
+.color-palette .hyperlink,
+.color-palette .separator {
+  visibility: hidden ;
+}

@@ -1,0 +1,71 @@
+.tab-pane {
+	-fx-tab-min-width: 100px;
+	-fx-border-width: 0;
+}
+
+.tab-header-area {
+    -fx-padding: 0;
+}
+
+.tab-header-background {
+	-fx-background-color: fx-primary;
+	-fx-border-width: 0;
+}
+
+.tab {
+	-fx-background-color: fx-primary;
+	-fx-background-radius: 0;
+	-fx-pref-height: 35px;
+	-fx-background-insets: 0;
+}
+
+.tab-label {
+   -fx-text-fill: fx-light;
+}
+
+.tab-pane:top > .tab-header-area > .headers-region > .tab {
+	-fx-border-width: 0 0 1.5px 0;
+	-fx-border-color: fx-primary; /*IMPORTANT this makes tabs move up little which is junk */
+}
+
+.tab:selected {
+    -fx-border-color: fx-accent !IMPORTANT; /*IMPORTANT Color for selected tab is same regardless of alignment */
+    -fx-background-color: fx-primary-dim;
+}
+
+.tab:selected .focus-indicator {
+	-fx-border-color: transparent; /*IMPORTANT without it looks like junk */
+}
+
+.tab:selected > .tab-container > .tab-close-button {
+    -fx-background-color: fx-light;
+}
+
+.tab:selected > .tab-container > .tab-close-button:hover {
+    -fx-background-color: fx-accent;
+    -fx-cursor: hand;
+}
+
+/*======== Down here is for when tab's width become more than tab pane width ====*/
+
+.tab-pane .control-buttons-tab {
+	-fx-pref-height: 35px;
+    -fx-background-radius: 0;
+	-fx-background-insets: 0;
+    -fx-background-color: fx-primary;
+    -fx-cursor: hand;
+}
+
+.tab-pane .control-buttons-tab:hover {
+    -fx-background-color: fx-primary-dim;
+}
+
+.tab-pane .tab-down-button {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 15px;
+}
+
+.tab-pane .tab-down-button .arrow {
+    -fx-background-color: fx-light;
+    -fx-padding: 3.5px;
+}
