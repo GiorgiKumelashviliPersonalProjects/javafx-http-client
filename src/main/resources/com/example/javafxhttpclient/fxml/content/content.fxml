@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane"
+            fx:controller="com.example.javafxhttpclient.controllers.ContentController"
+            xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-background-color: green;"
+            AnchorPane.topAnchor="35"
+            AnchorPane.bottomAnchor="0"
+            AnchorPane.rightAnchor="0"
+            maxWidth="1650">
+    <!-- Split pane for resizing -->
+    <SplitPane fx:id="splitPane"
+               AnchorPane.topAnchor="0"
+               AnchorPane.leftAnchor="0"
+               AnchorPane.rightAnchor="0"
+               AnchorPane.bottomAnchor="0"
+               dividerPositions="0.5">
+        <!-- Request tabs -->
+        <AnchorPane>
+            <GridPane fx:id="gridPane"
+                      AnchorPane.topAnchor="0"
+                      AnchorPane.leftAnchor="0"
+                      AnchorPane.rightAnchor="0"
+                      prefHeight="35"
+                      style="-fx-background-color: yellow">
+                <ComboBox fx:id="httpMethodsCombobox"
+                          GridPane.columnIndex="0"
+                          prefHeight="35.0"
+                          prefWidth="100.0"/>
+
+                <TextField fx:id="urlTextField"
+                           GridPane.fillWidth="true"
+                           GridPane.columnIndex="1"
+                           promptText="https://example.com/api"
+                           prefHeight="35.0"/>
+
+                <Button fx:id="sendButton"
+                        GridPane.columnIndex="2"
+                        text="Send"
+                        styleClass="send-button"
+                        prefHeight="35.0"
+                        prefWidth="80.0"/>
+            </GridPane>
+
+            <!-- Needed because root tabs doesn't allow more than one component somehow-->
+            <TabPane AnchorPane.topAnchor="35"
+                     AnchorPane.leftAnchor="0"
+                     AnchorPane.rightAnchor="0"
+                     AnchorPane.bottomAnchor="0"
+                     prefHeight="300.0">
+                <Tab closable="false" text="JSON">
+                    <fx:include source="tabs/json.fxml"/>
+                </Tab>
+                <Tab closable="false" text="Headers">
+                    <fx:include source="tabs/headers.fxml"/>
+                </Tab>
+                <Tab closable="false" text="Query">
+                </Tab>
+            </TabPane>
+        </AnchorPane>
+
+        <!-- Response tabs -->
+        <AnchorPane style="-fx-background-color: fx-dark;"
+                    AnchorPane.topAnchor="0"
+                    AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0"
+                    AnchorPane.bottomAnchor="0">
+            <!-- Hollow place for symmetric-nes -->
+            <GridPane
+                      AnchorPane.topAnchor="0"
+                      AnchorPane.leftAnchor="0"
+                      AnchorPane.rightAnchor="0"
+                      prefHeight="35"
+                      styleClass="bg-primary-dim"/>
+            <!--Tabs for preview and headers -->
+            <TabPane AnchorPane.topAnchor="35"
+                     AnchorPane.leftAnchor="0"
+                     AnchorPane.rightAnchor="0"
+                     AnchorPane.bottomAnchor="0"
+                     prefHeight="300.0">
+                <Tab closable="false" text="Preview">
+                    <fx:include source="tabs/json.fxml"/>
+                </Tab>
+                <Tab closable="false" text="Headers">
+                </Tab>
+            </TabPane>
+        </AnchorPane>
+    </SplitPane>
+</AnchorPane>

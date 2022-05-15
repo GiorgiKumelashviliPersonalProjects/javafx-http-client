@@ -3,13 +3,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:controller="com.example.javafxhttpclient.HttpClientController"
+<AnchorPane fx:controller="com.example.javafxhttpclient.controllers.MainController"
             prefHeight="900.0"
             prefWidth="1200.0"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1">
     <!-- Top menu bar -->
-    <fx:include source="components/menubar.fxml"/>
+    <fx:include source="fxml/content/menubar.fxml"/>
 
     <StackPane fx:id="stackPane"
                AnchorPane.topAnchor="35"
@@ -17,9 +17,9 @@
                AnchorPane.rightAnchor="0"
                AnchorPane.leftAnchor="0">
         <!-- Sidebar controller injected here !!! -->
-        <fx:include fx:id="sidebar" source="components/sidebar.fxml"/>
+        <fx:include fx:id="sidebar" source="fxml/content/sidebar.fxml"/>
 
         <!-- Main content -->
-        <fx:include fx:id="content" source="components/content.fxml"/>
+        <fx:include fx:id="content" source="fxml/content/content.fxml"/>
     </StackPane>
 </AnchorPane>
