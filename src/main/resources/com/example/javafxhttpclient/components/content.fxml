@@ -49,14 +49,16 @@
             <TabPane AnchorPane.topAnchor="35"
                      AnchorPane.leftAnchor="0"
                      AnchorPane.rightAnchor="0"
+                     AnchorPane.bottomAnchor="0"
                      prefHeight="300.0">
+                <!-- Needed because root tabs doesn't allow more than one component somehow-->
                 <Tab closable="false" text="JSON">
-                    <!-- Needed because root tabs doesn't allow more than one component somehow-->
+                </Tab>
+                <Tab closable="false" text="Headers">
                     <fx:include source="tabs/headers.fxml" />
                 </Tab>
-                <Tab closable="false" text="Headers"/>
-                <Tab closable="false" text="Query"/>
-
+                <Tab closable="false" text="Query">
+                </Tab>
             </TabPane>
         </AnchorPane>
 

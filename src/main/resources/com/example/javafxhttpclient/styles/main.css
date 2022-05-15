@@ -16,6 +16,10 @@
 @import "treeview.css";
 
 
+.scroll-pane {
+    -fx-background-color: fx-primary-dim;
+}
+
 .split-pane {
 	-fx-padding: 0;
     -fx-background-insets: 0;
@@ -46,6 +50,6 @@
 
 .white-fill { -fx-fill: fx-light; }
 .cursor-pointer { -fx-cursor: hand }
-
+.bg-primary-dim { -fx-background-color: fx-primary-dim }
 
 
