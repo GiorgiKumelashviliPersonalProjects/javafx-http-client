@@ -10,6 +10,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * TODO -> add filter and plus icon button above tree view
+ * TODO -> more padding on tree items and add text icons on tree items just like in insomnia
+ * TODO -> add context menu on treeview items
+ * TODO -> add json text area
+ * TODO -> add headers area
+ * TODO -> add response area
+ * TODO -> add when exiting show alert and save everything in local sqlite using jdbc
+ */
 public class HttpClientDemo extends Application {
     @Override
     public void start(Stage stage) throws IOException {

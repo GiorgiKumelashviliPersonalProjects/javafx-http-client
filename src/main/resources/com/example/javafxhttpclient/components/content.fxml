@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
+<?import com.example.javafxhttpclient.HeaderInputsComponent?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
+
 <AnchorPane fx:id="anchorPane"
             fx:controller="com.example.javafxhttpclient.controllers.ContentController"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -48,15 +45,18 @@
                         prefHeight="35.0"
                         prefWidth="80.0"/>
             </GridPane>
-            <!--                                    style="-fx-background-color: fx-accent;-fx-text-fill:black;-fx-cursor: hand;"-->
 
             <TabPane AnchorPane.topAnchor="35"
                      AnchorPane.leftAnchor="0"
                      AnchorPane.rightAnchor="0"
                      prefHeight="300.0">
-                <Tab closable="false" text="JSON"/>
+                <Tab closable="false" text="JSON">
+                    <!-- Needed because root tabs doesn't allow more than one component somehow-->
+                    <fx:include source="tabs/headers.fxml" />
+                </Tab>
                 <Tab closable="false" text="Headers"/>
                 <Tab closable="false" text="Query"/>
+
             </TabPane>
         </AnchorPane>
 

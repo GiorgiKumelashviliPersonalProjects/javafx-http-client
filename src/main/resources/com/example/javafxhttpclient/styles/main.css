@@ -41,3 +41,11 @@
 .send-button:focus, .send-button:active, .send-button:pressed {
     -fx-background-color: derive(fx-accent, -30%);
 }
+
+/* utility classes */
+
+.white-fill { -fx-fill: fx-light; }
+.cursor-pointer { -fx-cursor: hand }
+
+
+

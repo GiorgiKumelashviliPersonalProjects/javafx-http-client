@@ -46,5 +46,6 @@ public class ContentController implements Initializable {
 
         httpMethodsCombobox.getItems().addAll(HttpMethods.all());
         httpMethodsCombobox.setValue(HttpMethods.GET.toString());
+
     }
 }

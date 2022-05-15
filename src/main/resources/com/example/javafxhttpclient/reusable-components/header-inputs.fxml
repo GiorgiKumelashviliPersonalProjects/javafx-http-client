@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
+    <HBox HBox.hgrow="ALWAYS"
+          spacing="10"
+          AnchorPane.rightAnchor="0"
+          style="-fx-background-color:green;-fx-padding: 10px 20px;">
+        <TextField HBox.hgrow="ALWAYS" promptText="name"/>
+        <TextField HBox.hgrow="ALWAYS" promptText="value"/>
+
+        <Button styleClass="cursor-pointer">
+            <graphic>
+                <FontAwesomeIconView styleClass="white-fill" glyphName="TRASH"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>

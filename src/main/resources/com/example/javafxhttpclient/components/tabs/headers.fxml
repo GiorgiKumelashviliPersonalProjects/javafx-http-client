@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.example.javafxhttpclient.HeaderInputsComponent?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox style="-fx-background-color:red">
+    <HBox HBox.hgrow="ALWAYS"
+          spacing="10"
+          AnchorPane.rightAnchor="0"
+          style="-fx-background-color:green;-fx-padding: 10px 20px;">
+        <Button styleClass="cursor-pointer">
+            <graphic>
+                <FontAwesomeIconView styleClass="white-fill" glyphName="PLUS"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <HeaderInputsComponent/>
+    <HeaderInputsComponent/>
+</VBox>
