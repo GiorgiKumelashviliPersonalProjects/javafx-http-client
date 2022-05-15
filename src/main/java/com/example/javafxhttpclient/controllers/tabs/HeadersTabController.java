@@ -1,11 +1,11 @@
-package com.example.javafxhttpclient.controllers;
+package com.example.javafxhttpclient.controllers.tabs;
 
-import com.example.javafxhttpclient.HeaderInputsComponent;
+import com.example.javafxhttpclient.components.HeaderInputsComponent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
-public class TabsController {
+public class HeadersTabController {
     @FXML
     VBox tabContent;
 

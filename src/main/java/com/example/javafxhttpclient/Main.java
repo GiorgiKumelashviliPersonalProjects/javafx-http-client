@@ -19,10 +19,10 @@ import java.util.Objects;
  * TODO -> add response area
  * TODO -> add when exiting show alert and save everything in local sqlite using jdbc
  */
-public class HttpClientDemo extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HttpClientDemo.class.getResource("main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), Constants.MIN_WIDTH, Constants.MIN_HEIGHT);
 
         // styling

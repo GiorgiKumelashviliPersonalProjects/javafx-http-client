@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.example.javafxhttpclient.HeaderInputsComponent?>
+<?import com.example.javafxhttpclient.components.HeaderInputsComponent?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +10,7 @@
 
 <?import javafx.scene.control.ScrollPane?>
 
-<ScrollPane fx:controller="com.example.javafxhttpclient.controllers.TabsController"
+<ScrollPane fx:controller="com.example.javafxhttpclient.controllers.tabs.HeadersTabController"
             xmlns:fx="http://javafx.com/fxml/1"
             fitToWidth="true"
             fitToHeight="true">

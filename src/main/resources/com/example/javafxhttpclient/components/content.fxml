@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import com.example.javafxhttpclient.HeaderInputsComponent?>
+<?import com.example.javafxhttpclient.components.HeaderInputsComponent?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -53,6 +53,7 @@
                      prefHeight="300.0">
                 <!-- Needed because root tabs doesn't allow more than one component somehow-->
                 <Tab closable="false" text="JSON">
+                    <fx:include source="tabs/json.fxml" />
                 </Tab>
                 <Tab closable="false" text="Headers">
                     <fx:include source="tabs/headers.fxml" />

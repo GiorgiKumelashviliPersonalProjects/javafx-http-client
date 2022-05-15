@@ -1,9 +1,8 @@
-package com.example.javafxhttpclient;
+package com.example.javafxhttpclient.components;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -19,7 +18,7 @@ public class HeaderInputsComponent extends VBox {
     Button deleteButton;
 
     public HeaderInputsComponent() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/javafxhttpclient/reusable-components/HeaderInputsComponent.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/javafxhttpclient/reusableComponents/HeaderInputsComponent.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
