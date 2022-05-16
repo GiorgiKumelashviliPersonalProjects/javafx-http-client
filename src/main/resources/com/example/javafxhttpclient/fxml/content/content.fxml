@@ -10,14 +10,16 @@
             AnchorPane.topAnchor="35"
             AnchorPane.bottomAnchor="0"
             AnchorPane.rightAnchor="0"
-            maxWidth="1650">
+            AnchorPane.leftAnchor="0">
     <!-- Split pane for resizing -->
     <SplitPane fx:id="splitPane"
                AnchorPane.topAnchor="0"
                AnchorPane.leftAnchor="0"
                AnchorPane.rightAnchor="0"
-               AnchorPane.bottomAnchor="0"
-               dividerPositions="0.5">
+               AnchorPane.bottomAnchor="0">
+        <!-- Sidebar controller injected here !!! -->
+        <fx:include source="sidebar.fxml"/>
+
         <!-- Request tabs -->
         <AnchorPane>
             <GridPane fx:id="gridPane"
@@ -70,11 +72,11 @@
                     AnchorPane.bottomAnchor="0">
             <!-- Hollow place for symmetric-nes -->
             <GridPane
-                      AnchorPane.topAnchor="0"
-                      AnchorPane.leftAnchor="0"
-                      AnchorPane.rightAnchor="0"
-                      prefHeight="35"
-                      styleClass="bg-primary-dim"/>
+                    AnchorPane.topAnchor="0"
+                    AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0"
+                    prefHeight="35"
+                    styleClass="bg-primary-dim"/>
             <!--Tabs for preview and headers -->
             <TabPane AnchorPane.topAnchor="35"
                      AnchorPane.leftAnchor="0"

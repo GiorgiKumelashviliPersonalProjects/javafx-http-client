@@ -13,11 +13,11 @@ public class MainController implements Initializable {
     @FXML
     ContentController contentController;
 
-    @FXML
-    StackPane stackPane;
+//    @FXML
+//    StackPane stackPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        stackPane.setAlignment(contentController.anchorPane, Pos.TOP_RIGHT);
+//        stackPane.setAlignment(contentController.anchorPane, Pos.TOP_RIGHT);
     }
 }
