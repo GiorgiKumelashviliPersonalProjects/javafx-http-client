@@ -11,7 +11,7 @@ public class EditorArea extends CodeArea {
     private JSONHighlighter highlighter;
 
     public EditorArea() {
-        getStyleClass().add("everest-code-area");
+        getStyleClass().add("editor-area");
         setWrapText(true);
         setPadding(new Insets(5));
         multiPlainChanges()

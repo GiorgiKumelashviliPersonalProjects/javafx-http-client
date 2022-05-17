@@ -1,14 +1,14 @@
-.everest-code-area {
+.editor-area {
     -fx-background-color: #282828;
 }
 
-.everest-code-area .text {
+.editor-area .text {
     -fx-fill: #ababab;
     -fx-font-family: "Liberation Mono", "Consolas", "Courier New", "Monaco", "DejaVu Sans Mono", monospace;
     -fx-font-size: 15px;
 }
 
-.everest-code-area .caret {
+.editor-area .caret {
     -fx-stroke: white;
 }
 

@@ -11,9 +11,6 @@ import java.io.IOException;
 
 /**
  * TODO -> add filter and plus icon button above tree view
- * TODO -> more padding on tree items and add text icons on tree items just like in insomnia
- * TODO -> add context menu on treeview items
- * TODO -> add response area
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  */
 public class Main extends Application {

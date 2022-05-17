@@ -9,6 +9,7 @@
 .tree-cell {
     -fx-text-fill: white;
 	-fx-background-color: transparent;
+    -fx-padding: 0.75em 0em 0.75em 0em ;
 }
 
 .tree-cell:focused {
@@ -18,3 +19,9 @@
 .tree-cell .arrow {
     -fx-background-color: white;
 }
+
+.tree-cell .tree-disclosure-node .arrow {
+    /*-fx-shape: "M 0 0 L 10 5 L 0 10 L 0 8 L 8 5 L 0 2 Z";*/
+    /*visibility: hidden;*/
+}
+
