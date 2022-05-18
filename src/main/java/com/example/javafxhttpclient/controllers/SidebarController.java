@@ -2,21 +2,23 @@ package com.example.javafxhttpclient.controllers;
 
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.treeItems.SavedRequestTreeItem;
+import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeCellImpl;
+import com.example.javafxhttpclient.core.utils.Constants;
+import com.example.javafxhttpclient.core.utils.FileManipulator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
@@ -40,22 +42,24 @@ public class SidebarController implements Initializable {
         // set root which is not visible
         TreeItem<String> invisibleRoot = new TreeItem<>(null);
         invisibleRoot.getChildren().addAll(root1.getItem(), root2.getItem(), root3.getItem());
+
+        savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl());
         savedRequests.setRoot(invisibleRoot);
         savedRequests.setShowRoot(false);
-
-        // add context menu to whole tree view
-        addContextMenu();
     }
 
-    public void addContextMenu() {
-        ContextMenu contextMenu = new ContextMenu();
+    public void openModal(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader modalFxml = FileManipulator.fxmlLoader(Constants.addSavedRequestTreeItem);
+        String mainCss = FileManipulator.css(Constants.mainCss);
 
-        MenuItem item1 = new MenuItem("hello1");
-        MenuItem item2 = new MenuItem("hello2");
-        MenuItem item3 = new MenuItem("hello3");
-        MenuItem item4 = new MenuItem("hello4");
+        Scene addTreeItemModalScene = new Scene(modalFxml.load());
+        addTreeItemModalScene.getStylesheets().add(mainCss);
 
-        contextMenu.getItems().addAll(item1, item2, item3, item4);
-        savedRequests.setContextMenu(contextMenu);
+        stage.setScene(addTreeItemModalScene);
+        stage.setTitle("My modal window");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.show();
     }
 }

@@ -46,6 +46,10 @@
     -fx-background-color: derive(fx-accent, -30%);
 }
 
+.label {
+    -fx-text-fill: fx-light;
+}
+
 /* utility classes */
 
 .white-fill { -fx-fill: fx-light; }

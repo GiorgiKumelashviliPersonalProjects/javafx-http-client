@@ -1,6 +1,11 @@
 package com.example.javafxhttpclient.core.treeItems;
 
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
+import com.example.javafxhttpclient.core.treeItems.fragments.FolderTreeItem;
+import com.example.javafxhttpclient.core.treeItems.fragments.RequestTreeItem;
+import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeItemAbstr;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,16 +14,27 @@ import java.io.InputStream;
 import java.util.*;
 
 public class SavedRequestTreeItem {
+    private boolean addContextMenu = true;
     private final SavedTreeItemType savedTreeItemType;
     private final String name;
-    private final TreeItem<String> item;
+    private TreeItem<String> item;
     private final List<SavedRequestTreeItem> children = new ArrayList<>();
 
     public SavedRequestTreeItem(SavedTreeItemType savedTreeItemType, String name) {
         this.savedTreeItemType = savedTreeItemType;
         this.name = name;
-        this.item = new TreeItem<>(name);
+        setItem();
         setImage();
+    }
+
+    private void setItem() {
+        if (savedTreeItemType == SavedTreeItemType.REQUEST) {
+            item = new RequestTreeItem(name);
+        }
+
+        if (savedTreeItemType == SavedTreeItemType.FOLDER) {
+            item = new FolderTreeItem(name);
+        }
     }
 
     public List<SavedRequestTreeItem> getChildren() {
@@ -37,7 +53,7 @@ public class SavedRequestTreeItem {
         return name;
     }
 
-    public void setChildren(SavedRequestTreeItem ...params) {
+    public void setChildren(SavedRequestTreeItem... params) {
         // add inside class
         children.addAll(Arrays.asList(params));
 
@@ -57,5 +73,19 @@ public class SavedRequestTreeItem {
 
             item.setGraphic(folderImageIcon);
         }
+    }
+
+    private void addContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem createNewRequest = new MenuItem("Create Request");
+
+        if (savedTreeItemType == SavedTreeItemType.FOLDER) {
+            MenuItem createNewFolder = new MenuItem("Create Folder");
+            contextMenu.getItems().add(createNewFolder);
+        }
+
+        contextMenu.getItems().addAll(createNewRequest, deleteItem);
     }
 }

@@ -3,16 +3,35 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <AnchorPane fx:id="rootParent"
             fx:controller="com.example.javafxhttpclient.controllers.SidebarController"
             AnchorPane.topAnchor="35"
-            style="-fx-background-color:red"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1">
+    <!--            style="-fx-background-color:red"-->
+
+    <HBox HBox.hgrow="ALWAYS"
+          spacing="10"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.leftAnchor="0"
+          style="-fx-padding: 5px;-fx-background-color: fx-primary;">
+        <TextField HBox.hgrow="ALWAYS" promptText="Filter"/>
+
+        <Button styleClass="cursor-pointer" onAction="#openModal">
+            <graphic>
+                <FontAwesomeIconView styleClass="white-fill" glyphName="PLUS"/>
+            </graphic>
+        </Button>
+    </HBox>
+
     <!-- Saved Request here -->
     <TreeView fx:id="savedRequests"
               minWidth="100"
-              AnchorPane.topAnchor="0"
+              AnchorPane.topAnchor="35"
               AnchorPane.leftAnchor="0"
               AnchorPane.rightAnchor="0"
               AnchorPane.bottomAnchor="0"/>

@@ -10,8 +10,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * TODO -> add filter and plus icon button above tree view
+ * TODO -> send http request
+ * TODO -> show http response
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
+ * TODO -> create folder, request (from above treeview button and context menu)
+ * TODO -> filter tree items
  */
 public class Main extends Application {
     public static void main(String[] args) {
