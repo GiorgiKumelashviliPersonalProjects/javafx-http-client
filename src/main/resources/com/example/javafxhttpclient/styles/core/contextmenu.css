@@ -17,7 +17,11 @@
 	-fx-background-color: fx-primary-dim;
 }
 
-
+.context-menu > * > .separator > .line {
+    -fx-border-color: white;
+    -fx-border-width: 0.1px;
+    -fx-border-insets: 10px 0;
+}
 
 
 

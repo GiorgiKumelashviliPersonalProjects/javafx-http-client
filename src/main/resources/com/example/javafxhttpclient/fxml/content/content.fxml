@@ -60,6 +60,7 @@
                     <fx:include source="tabs/headers.fxml"/>
                 </Tab>
                 <Tab closable="false" text="Query">
+                    <fx:include source="tabs/query.fxml"/>
                 </Tab>
             </TabPane>
         </AnchorPane>
@@ -84,9 +85,10 @@
                      AnchorPane.bottomAnchor="0"
                      prefHeight="300.0">
                 <Tab closable="false" text="Preview">
-                    <fx:include source="tabs/json.fxml"/>
+                    <fx:include source="tabs/responseJson.fxml"/>
                 </Tab>
                 <Tab closable="false" text="Headers">
+                    <fx:include source="tabs/responseHeaders.fxml"/>
                 </Tab>
             </TabPane>
         </AnchorPane>

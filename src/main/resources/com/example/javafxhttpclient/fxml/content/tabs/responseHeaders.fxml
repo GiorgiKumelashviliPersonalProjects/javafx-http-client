@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.javafxhttpclient.controllers.tabs.ResponseHeadersController"
+            prefWidth="600.0">
+    <TableView fx:id="headersTableList"
+               AnchorPane.rightAnchor="10"
+               AnchorPane.leftAnchor="10"
+               AnchorPane.topAnchor="10"/>
+</AnchorPane>

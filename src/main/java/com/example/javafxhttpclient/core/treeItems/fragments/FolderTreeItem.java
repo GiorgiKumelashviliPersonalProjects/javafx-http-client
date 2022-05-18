@@ -15,7 +15,8 @@ public class FolderTreeItem extends SavedRequestTreeItemAbstr {
 
         MenuItem deleteItem = new MenuItem("Delete");
         MenuItem createNewRequest = new MenuItem("Create Request");
-        contextMenu.getItems().addAll(createNewRequest, deleteItem);
+        MenuItem rename = new MenuItem("Rename");
+        contextMenu.getItems().addAll(createNewRequest, deleteItem, rename);
 
         // add context menu and actions
         return contextMenu;

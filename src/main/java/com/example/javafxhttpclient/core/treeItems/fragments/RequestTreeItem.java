@@ -1,9 +1,7 @@
 package com.example.javafxhttpclient.core.treeItems.fragments;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 
 public class RequestTreeItem extends SavedRequestTreeItemAbstr {
     public RequestTreeItem(String name) {
@@ -15,7 +13,8 @@ public class RequestTreeItem extends SavedRequestTreeItemAbstr {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem deleteItem = new MenuItem("Delete");
-        contextMenu.getItems().addAll(deleteItem);
+        MenuItem rename = new MenuItem("Rename");
+        contextMenu.getItems().addAll(deleteItem, rename);
 
         // add context menu and actions
         return contextMenu;

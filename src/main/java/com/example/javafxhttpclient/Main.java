@@ -15,6 +15,8 @@ import java.io.IOException;
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  * TODO -> create folder, request (from above treeview button and context menu)
  * TODO -> filter tree items
+ *
+ * TODO -> tree view single click toggle not two
  */
 public class Main extends Application {
     public static void main(String[] args) {

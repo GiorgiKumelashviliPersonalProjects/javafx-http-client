@@ -3,18 +3,18 @@ package com.example.javafxhttpclient.core.treeItems;
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.treeItems.fragments.FolderTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.RequestTreeItem;
-import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeItemAbstr;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import com.example.javafxhttpclient.core.utils.Constants;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class SavedRequestTreeItem {
-    private boolean addContextMenu = true;
     private final SavedTreeItemType savedTreeItemType;
     private final String name;
     private TreeItem<String> item;
@@ -37,20 +37,8 @@ public class SavedRequestTreeItem {
         }
     }
 
-    public List<SavedRequestTreeItem> getChildren() {
-        return children;
-    }
-
-    public SavedTreeItemType getSavedTreeItemType() {
-        return savedTreeItemType;
-    }
-
     public TreeItem<String> getItem() {
         return item;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setChildren(SavedRequestTreeItem... params) {
@@ -65,27 +53,13 @@ public class SavedRequestTreeItem {
     private void setImage() {
         if (savedTreeItemType == SavedTreeItemType.FOLDER) {
             // get folder icon
-            InputStream imageStream = getClass().getResourceAsStream("/com/example/javafxhttpclient/icons8-envelope-50.png");
+            InputStream imageStream = getClass().getResourceAsStream(Constants.savedRequestTreeItemFolderIcon);
             assert imageStream != null;
             ImageView folderImageIcon = new ImageView(new Image(imageStream));
-            folderImageIcon.setFitHeight(20);
-            folderImageIcon.setFitWidth(20);
+            folderImageIcon.setFitHeight(15);
+            folderImageIcon.setFitWidth(15);
 
             item.setGraphic(folderImageIcon);
         }
-    }
-
-    private void addContextMenu() {
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem deleteItem = new MenuItem("Delete");
-        MenuItem createNewRequest = new MenuItem("Create Request");
-
-        if (savedTreeItemType == SavedTreeItemType.FOLDER) {
-            MenuItem createNewFolder = new MenuItem("Create Folder");
-            contextMenu.getItems().add(createNewFolder);
-        }
-
-        contextMenu.getItems().addAll(createNewRequest, deleteItem);
     }
 }
