@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,7 +45,31 @@ public class SidebarController implements Initializable {
         TreeItem<String> invisibleRoot = new TreeItem<>(null);
         invisibleRoot.getChildren().addAll(root1.getItem(), root2.getItem(), root3.getItem());
 
-        savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl());
+
+        savedRequests.setCellFactory(p -> {
+            SavedRequestTreeCellImpl savedRequestTreeCell = new SavedRequestTreeCellImpl();
+
+            //TODO here is single click toggle
+//            savedRequestTreeCell.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+//                System.out.println("==================");
+//                System.out.println(e.toString());
+//
+//                System.out.println(e.getClickCount());
+//                System.out.println(e.getButton());
+//
+//                System.out.println(e.getClickCount() % 2 == 1);
+//                System.out.println(e.getButton().equals(MouseButton.PRIMARY));
+//
+//                if (e.getClickCount() % 2 == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
+//                    System.out.println("consumed");
+//                    e.consume();
+//
+//                }
+//
+//                System.out.println("==================");
+//            });
+            return savedRequestTreeCell;
+        });
         savedRequests.setRoot(invisibleRoot);
         savedRequests.setShowRoot(false);
     }

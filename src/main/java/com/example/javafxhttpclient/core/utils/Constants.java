@@ -6,7 +6,7 @@ public class Constants {
     public static String headerInputComponent = "/com/example/javafxhttpclient/fxml/components/HeaderInputsComponent.fxml";
     public static String jsonHighLights = "/com/example/javafxhttpclient/styles/editorArea/jsonHighlight.css";
     public static String addSavedRequestTreeItem = "/com/example/javafxhttpclient/fxml/components/AddTreeItemModal.fxml";
-    public static String savedRequestTreeItemFolderIcon = "/com/example/javafxhttpclient/icons8-folder-40.png";
+    public static String savedRequestTreeItemFolderIcon = "/com/example/javafxhttpclient/images/folderIcon.png";
 
 
     public static String testForNow = "/home/giorgi/Desktop/test.json";
