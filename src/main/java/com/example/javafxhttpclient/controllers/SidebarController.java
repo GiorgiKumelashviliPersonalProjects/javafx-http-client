@@ -17,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,33 +44,10 @@ public class SidebarController implements Initializable {
         TreeItem<String> invisibleRoot = new TreeItem<>(null);
         invisibleRoot.getChildren().addAll(root1.getItem(), root2.getItem(), root3.getItem());
 
-
-        savedRequests.setCellFactory(p -> {
-            SavedRequestTreeCellImpl savedRequestTreeCell = new SavedRequestTreeCellImpl();
-
-            //TODO here is single click toggle
-//            savedRequestTreeCell.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
-//                System.out.println("==================");
-//                System.out.println(e.toString());
-//
-//                System.out.println(e.getClickCount());
-//                System.out.println(e.getButton());
-//
-//                System.out.println(e.getClickCount() % 2 == 1);
-//                System.out.println(e.getButton().equals(MouseButton.PRIMARY));
-//
-//                if (e.getClickCount() % 2 == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
-//                    System.out.println("consumed");
-//                    e.consume();
-//
-//                }
-//
-//                System.out.println("==================");
-//            });
-            return savedRequestTreeCell;
-        });
+        savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl());
         savedRequests.setRoot(invisibleRoot);
         savedRequests.setShowRoot(false);
+        toggleOnSingleClickTreeItem();
     }
 
     public void openModal(ActionEvent event) throws IOException {
@@ -87,5 +63,22 @@ public class SidebarController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
         stage.show();
+    }
+
+    public void toggleOnSingleClickTreeItem() {
+        savedRequests.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            TreeItem<String> selectedTreeItem = savedRequests.getSelectionModel().getSelectedItem();
+
+            // single click on primary mouse
+            if (
+                    e.getButton().equals(MouseButton.PRIMARY) &&
+                            e.getClickCount() == 1 &&
+                            selectedTreeItem.getChildren().size() > 0
+            ) {
+                selectedTreeItem.setExpanded(!selectedTreeItem.isExpanded());
+
+                System.out.println(selectedTreeItem.getChildren());
+            }
+        });
     }
 }
