@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -18,27 +17,39 @@ public class JsonTabController implements Initializable {
     @FXML
     AnchorPane anchorPane;
 
-    EditorArea rawInputArea;
+    private EditorArea rawInputArea;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            String testJson = FileManipulator.getFileContent(Constants.testForNow);
-            String jsonCss = FileManipulator.css(Constants.jsonHighLights);
+        String jsonCss = FileManipulator.css(Constants.jsonHighLights);
 
-            rawInputArea = new EditorArea();
-            rawInputArea.addStyleSheet(jsonCss);
-            rawInputArea.setText(testJson, new JSONFormatter(), new JSONHighlighter());
+        rawInputArea = new EditorArea();
+        rawInputArea.addStyleSheet(jsonCss);
+        rawInputArea.setText("{}", new JSONFormatter(), new JSONHighlighter());
 
-            VirtualizedScrollPane<EditorArea> codeArea = new VirtualizedScrollPane<>(rawInputArea);
-            AnchorPane.setRightAnchor(codeArea, 0.0);
-            AnchorPane.setLeftAnchor(codeArea, 0.0);
-            AnchorPane.setBottomAnchor(codeArea, 0.0);
-            AnchorPane.setTopAnchor(codeArea, 0.0);
+        VirtualizedScrollPane<EditorArea> codeArea = new VirtualizedScrollPane<>(rawInputArea);
+        AnchorPane.setRightAnchor(codeArea, 0.0);
+        AnchorPane.setLeftAnchor(codeArea, 0.0);
+        AnchorPane.setBottomAnchor(codeArea, 0.0);
+        AnchorPane.setTopAnchor(codeArea, 0.0);
 
-            anchorPane.getChildren().add(codeArea);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        anchorPane.getChildren().add(codeArea);
+    }
+
+    public EditorArea getCodeArea() {
+        return rawInputArea;
+    }
+
+    public void setJsonContent(String content) {
+        rawInputArea.setText(content, new JSONFormatter(), new JSONHighlighter());
+    }
+
+    public String getJsonContent() {
+        return rawInputArea.getText();
+    }
+
+    public void formatJson() {
+        rawInputArea.setText(getJsonContent(), new JSONFormatter(), new JSONHighlighter());
     }
 }

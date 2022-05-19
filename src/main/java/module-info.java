@@ -11,6 +11,8 @@ module com.example.javafxhttpclient {
     requires com.fasterxml.jackson.databind;
     requires org.json;
 
+    exports com.example.javafxhttpclient.core.codearea;
+
     exports com.example.javafxhttpclient.controllers;
     opens com.example.javafxhttpclient.controllers to javafx.fxml;
 

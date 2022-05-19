@@ -1,9 +1,15 @@
 package com.example.javafxhttpclient.controllers;
 
+import com.example.javafxhttpclient.controllers.tabs.JsonTabController;
+import com.example.javafxhttpclient.core.codearea.JSONFormatter;
+import com.example.javafxhttpclient.core.codearea.JSONHighlighter;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
+import com.example.javafxhttpclient.core.networking.Network;
+import com.example.javafxhttpclient.core.utils.Util;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
@@ -37,6 +43,9 @@ public class ContentController implements Initializable {
     @FXML
     public Button sendButton;
 
+    @FXML
+    JsonTabController jsonTabController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // grid layout for first column
@@ -58,5 +67,21 @@ public class ContentController implements Initializable {
                 splitPane.setDividerPositions(0.14f, 0.6f, 0.65f);
             });
         });
+    }
+
+    public void onSendButtonClick(ActionEvent event) {
+        // validate url
+        if (Network.isNotValidUrl(urlTextField.getText())) {
+            Util.showAlert(Alert.AlertType.ERROR, "Invalid url");
+            return;
+        }
+
+        String url = urlTextField.getText();
+        String method = httpMethodsCombobox.getValue();
+        String jsonContent = jsonTabController.getJsonContent();
+
+        // TODO
+        // get headers
+        // get queries
     }
 }

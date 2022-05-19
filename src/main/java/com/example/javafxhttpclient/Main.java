@@ -14,7 +14,9 @@ import java.io.IOException;
  * TODO -> show http response
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  * TODO -> create folder, request (from above treeview button and context menu)
+ *
  * TODO -> filter tree items
+ * TODO -> shortcut on ctrl + enter on sending
  */
 public class Main extends Application {
     public static void main(String[] args) {
