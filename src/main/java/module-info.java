@@ -9,6 +9,7 @@ module com.example.javafxhttpclient {
     requires java.datatransfer;
     requires java.desktop;
     requires com.fasterxml.jackson.databind;
+    requires org.json;
 
     exports com.example.javafxhttpclient.controllers;
     opens com.example.javafxhttpclient.controllers to javafx.fxml;

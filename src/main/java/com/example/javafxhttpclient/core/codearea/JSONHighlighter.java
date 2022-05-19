@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 
 public class JSONHighlighter implements Highlighter {
 
-    private static final String JSON_CURLY = "(?<JSONCURLY>\\{|\\})";
-    private static final String JSON_PROPERTY = "(?<JSONPROPERTY>\\\".*\\\")\\s*:\\s*";
-    private static final String JSON_VALUE = "(?<JSONVALUE>\\\".*\\\")";
-    private static final String JSON_ARRAY = "\\[(?<JSONARRAY>.*)\\]";
+    private static final String JSON_CURLY = "(?<JSONCURLY>[{}])";
+    private static final String JSON_PROPERTY = "(?<JSONPROPERTY>\".*\")\\s*:\\s*";
+    private static final String JSON_VALUE = "(?<JSONVALUE>\".*\")";
+    private static final String JSON_ARRAY = "\\[(?<JSONARRAY>.*)]";
     private static final String JSON_NUMBER = "(?<JSONNUMBER>\\d*.?\\d*)";
     private static final String JSON_BOOL = "(?<JSONBOOL>true|false)";
 
