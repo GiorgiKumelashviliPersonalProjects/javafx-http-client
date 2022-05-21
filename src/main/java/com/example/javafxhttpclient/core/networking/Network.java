@@ -9,10 +9,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 
 public class Network {
@@ -20,6 +18,9 @@ public class Network {
     private static final int READ_TIMEOUT = 5000;
     private URL targetURL;
     private String url;
+    private Map<String, String> requestHeaders;
+
+    private String requestBody;
 
     public Network(String url) throws MalformedURLException {
         if (isNotValidUrl(url) || url == null) {
@@ -42,7 +43,32 @@ public class Network {
         httpURLConnection.setConnectTimeout(CONNECTION_TIMEOUT);
         httpURLConnection.setReadTimeout(READ_TIMEOUT);
         httpURLConnection.setRequestProperty("Content-Type", "application/json"); //! ONLY JSON IS SUPPORTED
-        //Send request
+
+        //! info
+        // response headers
+        // httpURLConnection.getHeaderFields();
+        // request headers
+        // httpURLConnection.getRequestProperties();
+        if (requestHeaders != null) {
+            for (Map.Entry<String, String> header: requestHeaders.entrySet()) {
+                httpURLConnection.setRequestProperty(header.getKey(), header.getValue());
+            }
+
+            System.out.println(123);
+            System.out.println(httpURLConnection.getRequestProperties());
+        }
+
+        if (requestBody != null) {
+            httpURLConnection.setDoOutput(true);
+            OutputStream os = httpURLConnection.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
+            osw.write(requestBody);
+            osw.flush();
+            osw.close();
+            os.close();  //don't forget to close the OutputStream
+            httpURLConnection.connect();
+        }
+
 
         InputStreamReader responseStream;
         BufferedReader responseReader;
@@ -50,6 +76,7 @@ public class Network {
 
 
         try {
+            //Send request
             responseStream = new InputStreamReader(httpURLConnection.getInputStream());
             responseReader = new BufferedReader(responseStream);
             responseContent = new StringBuilder();
@@ -70,6 +97,7 @@ public class Network {
         }
 
         // headers
+        int statusCode = httpURLConnection.getResponseCode();
         Map<String, List<String>> map = httpURLConnection.getHeaderFields();
         Map<String, String> headers = new HashMap<>();
 
@@ -93,7 +121,7 @@ public class Network {
         Objects.requireNonNull(httpURLConnection).disconnect();
 
         // return response object
-        return new Response(headers, responseJsonData);
+        return new Response(headers, responseJsonData, statusCode);
     }
 
     public Response send(HttpMethods httpMethod, String addUrl) throws IOException, NoJsonResponseException {
@@ -127,5 +155,15 @@ public class Network {
         catch (Exception e) {
             return true;
         }
+    }
+
+    public void setRequestHeaders(Map<String, String> requestHeaders) {
+        this.requestHeaders = requestHeaders;
+    }
+    public void setRequestHeader(String name, String value) {
+        requestHeaders.put(name, value);
+    }
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
     }
 }

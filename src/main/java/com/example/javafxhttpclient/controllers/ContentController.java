@@ -5,21 +5,19 @@ import com.example.javafxhttpclient.controllers.tabs.JsonTabController;
 import com.example.javafxhttpclient.controllers.tabs.QueryTabController;
 import com.example.javafxhttpclient.core.enums.ContentTabs;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
+import com.example.javafxhttpclient.core.networking.Network;
+import com.example.javafxhttpclient.core.networking.Response;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.Map;
@@ -101,9 +99,7 @@ public class ContentController implements Initializable {
         //! Very important for setting positions of all split panes
         Platform.runLater(() -> {
             Stage stage = (Stage) splitPane.getScene().getWindow();
-            stage.widthProperty().addListener((observableValue, oldValue, newValue) -> {
-                splitPane.setDividerPositions(0.14f, 0.6f, 0.65f);
-            });
+            stage.widthProperty().addListener((observableValue, oldValue, newValue) -> splitPane.setDividerPositions(0.14f, 0.6f, 0.65f));
         });
     }
 
@@ -121,7 +117,7 @@ public class ContentController implements Initializable {
 //        }
 
         String url = urlTextField.getText();
-        String method = httpMethodsCombobox.getValue();
+        HttpMethods method = HttpMethods.valueOf(httpMethodsCombobox.getValue());
         String jsonContent = jsonTabController.getJsonContent();
         Map<String, String> headerData = headersTabController.getNameAndValues();
         Map<String, String> queryData = queryTabController.getNameAndValues();
@@ -131,6 +127,19 @@ public class ContentController implements Initializable {
         System.out.println(jsonContent);
         System.out.println(headerData);
         System.out.println(queryData);
+
+        // sen request and handle response
+        String errorMessage = null;
+        Response response = null;
+
+        try {
+            Network network = new Network(url);
+            response = network.send(method);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        handleResponse(response, errorMessage);
     }
 
     public void formatJson() {
@@ -141,11 +150,19 @@ public class ContentController implements Initializable {
         return formatButtonIcon;
     }
 
-    public void test(MouseEvent event) {
-//        System.out.println(event.getTarget().getClass());
-//        var x = (Text) event.getTarget();
+    private void handleResponse(Response response, String errorMessage) {
+        if (errorMessage != null) {
+            System.err.print("Error occurred: " + errorMessage);
+            return;
+        }
 
-//        System.out.println(x.get);
-//        System.out.println(event);
+        if (response != null) {
+            response.printFormattedJson();
+            System.out.println("end of line");
+
+            for (int i = 0; i < 1000; i++) {
+                System.out.println(Math.random());
+            }
+        }
     }
 }

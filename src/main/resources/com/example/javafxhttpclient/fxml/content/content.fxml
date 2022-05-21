@@ -54,7 +54,6 @@
                      AnchorPane.leftAnchor="0"
                      AnchorPane.rightAnchor="0"
                      AnchorPane.bottomAnchor="0"
-                     onMouseClicked="#test"
                      fx:id="contentTabPane"
                      prefHeight="300.0">
                 <Tab closable="false" fx:id="jsonTabComponent">

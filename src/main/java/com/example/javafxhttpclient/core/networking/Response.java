@@ -11,16 +11,18 @@ import java.util.Map;
 public class Response {
     public Map<String, String> headers;
     public JSONArray responseJsonData;
+    public int statusCode;
 
-    public Response(Map<String, String> headers, JSONArray responseJsonData) {
+    public Response(Map<String, String> headers, JSONArray responseJsonData, int statusCode) {
         this.headers = headers;
         this.responseJsonData = responseJsonData;
+        this.statusCode = statusCode;
     }
 
     public void printFormattedJson() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        JsonNode tree = null;
+        JsonNode tree;
 
         try {
             tree = mapper.readTree(responseJsonData.toString());

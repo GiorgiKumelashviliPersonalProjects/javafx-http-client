@@ -11,6 +11,9 @@ public class MainController implements Initializable {
     @FXML
     ContentController contentController;
 
+    @FXML
+    SidebarController sidebarController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
