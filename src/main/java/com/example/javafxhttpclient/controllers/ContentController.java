@@ -1,22 +1,14 @@
 package com.example.javafxhttpclient.controllers;
 
 import com.example.javafxhttpclient.controllers.tabs.JsonTabController;
-import com.example.javafxhttpclient.core.codearea.JSONFormatter;
-import com.example.javafxhttpclient.core.codearea.JSONHighlighter;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.utils.Util;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -24,8 +16,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ContentController implements Initializable {
@@ -79,13 +71,23 @@ public class ContentController implements Initializable {
     public void onSendButtonClick(ActionEvent event) {
         // validate url
         if (Network.isNotValidUrl(urlTextField.getText())) {
-            Util.showAlert(Alert.AlertType.ERROR, "Invalid url");
+            try {
+                String errorText = "Invalid url, please try another one \n(e.g. https://example.com)";
+                Util.showAlertModal(event, Alert.AlertType.ERROR, errorText);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
             return;
         }
 
         String url = urlTextField.getText();
         String method = httpMethodsCombobox.getValue();
         String jsonContent = jsonTabController.getJsonContent();
+
+        System.out.println(url);
+        System.out.println(method);
+        System.out.println(jsonContent);
 
         // TODO
         // get headers

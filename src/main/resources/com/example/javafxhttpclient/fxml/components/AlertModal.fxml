@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane
+        AnchorPane.bottomAnchor="0"
+        AnchorPane.rightAnchor="0"
+        AnchorPane.topAnchor="0"
+        AnchorPane.leftAnchor="0"
+        style="-fx-background-color: fx-primary"
+        xmlns="http://javafx.com/javafx/18"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.javafxhttpclient.core.fxml.AlertModalController">
+    <Button mnemonicParsing="false"
+            AnchorPane.bottomAnchor="10"
+            AnchorPane.rightAnchor="10"
+            onAction="#onClose"
+            prefHeight="25.0"
+            prefWidth="100.0"
+            text="Close"/>
+
+    <Text fx:id="alertText"
+          AnchorPane.topAnchor="20"
+          AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="0"
+          strokeType="OUTSIDE"
+          strokeWidth="0.0"
+          text="Text"/>
+</AnchorPane>
