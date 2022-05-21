@@ -8,13 +8,13 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import com.example.javafxhttpclient.core.fxml.HeaderInputsComponent?>
 
+<?import javafx.scene.layout.Pane?>
 <ScrollPane fx:controller="com.example.javafxhttpclient.controllers.tabs.HeadersTabController"
             xmlns:fx="http://javafx.com/fxml/1"
             fitToWidth="true"
             fitToHeight="true">
     <!-- Main container -->
-    <VBox fx:id="tabContent" styleClass="bg-primary-dim">
-        <!-- Adding new HeaderInputComponent -->
+    <VBox styleClass="bg-primary-dim">
         <HBox HBox.hgrow="ALWAYS"
               spacing="10"
               AnchorPane.rightAnchor="0"
@@ -26,7 +26,10 @@
             </Button>
         </HBox>
 
-        <HeaderInputsComponent/>
-        <HeaderInputsComponent/>
+        <!-- Adding new HeaderInputComponent -->
+        <VBox fx:id="tabContent">
+            <HeaderInputsComponent/>
+            <HeaderInputsComponent/>
+        </VBox>
     </VBox>
 </ScrollPane>

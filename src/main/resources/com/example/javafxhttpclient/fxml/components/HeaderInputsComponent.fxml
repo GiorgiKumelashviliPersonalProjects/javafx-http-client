@@ -6,14 +6,14 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 
 <fx:root type="javafx.scene.layout.VBox"
+         fx:id="root"
          xmlns:fx="http://javafx.com/fxml">
     <HBox HBox.hgrow="ALWAYS"
           spacing="10"
           AnchorPane.rightAnchor="0"
-          fx:id="container"
           style="-fx-padding: 10px 20px;">
-        <TextField HBox.hgrow="ALWAYS" promptText="name"/>
-        <TextField HBox.hgrow="ALWAYS" promptText="value"/>
+        <TextField fx:id="nameTextField" HBox.hgrow="ALWAYS" promptText="name"/>
+        <TextField fx:id="valueTextField" HBox.hgrow="ALWAYS" promptText="value"/>
 
         <Button styleClass="cursor-pointer" fx:id="deleteButton">
             <graphic>

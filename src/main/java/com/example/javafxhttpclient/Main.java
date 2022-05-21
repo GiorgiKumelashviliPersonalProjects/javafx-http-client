@@ -16,7 +16,6 @@ import java.io.IOException;
  * TODO -> all treeview actions (create,rename,delete from modal and context menu and menubar)
  * TODO -> filter tree items
  *
- * TODO -> (BUG) json format button must be only seen on json content (move button inside json fxml)
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
  */

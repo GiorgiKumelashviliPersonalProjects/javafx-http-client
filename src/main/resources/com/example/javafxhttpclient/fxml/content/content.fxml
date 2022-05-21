@@ -54,19 +54,22 @@
                      AnchorPane.leftAnchor="0"
                      AnchorPane.rightAnchor="0"
                      AnchorPane.bottomAnchor="0"
+                     onMouseClicked="#test"
+                     fx:id="contentTabPane"
                      prefHeight="300.0">
-                <Tab closable="false" text="JSON">
+                <Tab closable="false" fx:id="jsonTabComponent">
                     <fx:include fx:id="jsonTab" source="tabs/json.fxml"/>
                 </Tab>
-                <Tab closable="false" text="Headers">
-                    <fx:include source="tabs/headers.fxml"/>
+                <Tab closable="false" fx:id="headersTabComponent">
+                    <fx:include fx:id="headersTab" source="tabs/headers.fxml"/>
                 </Tab>
-                <Tab closable="false" text="Query">
-                    <fx:include source="tabs/query.fxml"/>
+                <Tab closable="false" fx:id="queryTabComponent">
+                    <fx:include fx:id="queryTab" source="tabs/query.fxml"/>
                 </Tab>
             </TabPane>
 
             <Button prefHeight="35"
+                    fx:id="formatButton"
                     onAction="#formatJson"
                     styleClass="cursor-pointer"
                     AnchorPane.rightAnchor="10"

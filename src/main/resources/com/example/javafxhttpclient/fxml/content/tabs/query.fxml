@@ -13,8 +13,7 @@
             fitToWidth="true"
             fitToHeight="true">
     <!-- Main container -->
-    <VBox fx:id="tabContent" styleClass="bg-primary-dim">
-        <!-- Adding new HeaderInputComponent -->
+    <VBox styleClass="bg-primary-dim">
         <HBox HBox.hgrow="ALWAYS"
               spacing="10"
               AnchorPane.rightAnchor="0"
@@ -26,6 +25,10 @@
             </Button>
         </HBox>
 
-        <HeaderInputsComponent/>
+        <!-- Adding new HeaderInputComponent -->
+        <VBox fx:id="queryTabContent">
+            <HeaderInputsComponent/>
+            <HeaderInputsComponent/>
+        </VBox>
     </VBox>
 </ScrollPane>

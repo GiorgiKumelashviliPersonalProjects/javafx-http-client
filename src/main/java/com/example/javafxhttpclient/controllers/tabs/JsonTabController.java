@@ -42,7 +42,7 @@ public class JsonTabController implements Initializable {
     }
 
     public void setJsonContent(String content) {
-        rawInputArea.setText(content, new JSONFormatter(), new JSONHighlighter());
+        getCodeArea().setText(content, new JSONFormatter(), new JSONHighlighter());
     }
 
     public String getJsonContent() {

@@ -13,6 +13,8 @@ public class NetworkTest {
         try {
             Network network = new Network(url);
             response = network.send(HttpMethods.GET, "/comments");
+
+            System.out.println("end of line");
         } catch (Exception e) {
             errorMessage = e.getMessage();
         }
