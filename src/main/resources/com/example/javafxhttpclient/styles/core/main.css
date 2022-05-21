@@ -57,3 +57,7 @@
 .bg-primary-dim { -fx-background-color: fx-primary-dim }
 
 
+/*for testing*/
+.red {
+-fx-background-color: red;
+}

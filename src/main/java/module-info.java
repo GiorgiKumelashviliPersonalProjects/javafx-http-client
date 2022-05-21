@@ -11,6 +11,9 @@ module com.example.javafxhttpclient {
     requires com.fasterxml.jackson.databind;
     requires org.json;
 
+    requires de.jensd.fx.glyphs.fontawesome;
+    requires de.jensd.fx.glyphs.commons;
+
     exports com.example.javafxhttpclient.core.codearea;
 
     exports com.example.javafxhttpclient.controllers;

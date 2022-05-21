@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <AnchorPane fx:id="anchorPane"
             fx:controller="com.example.javafxhttpclient.controllers.ContentController"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -64,6 +65,18 @@
                     <fx:include source="tabs/query.fxml"/>
                 </Tab>
             </TabPane>
+
+            <Button prefHeight="35"
+                    onAction="#formatJson"
+                    styleClass="cursor-pointer"
+                    AnchorPane.rightAnchor="10"
+                    AnchorPane.topAnchor="80">
+                <graphic>
+                    <FontAwesomeIconView styleClass="white-fill" glyphName="${controller.formatButtonIcon}"/>
+                </graphic>
+
+                Format
+            </Button>
         </AnchorPane>
 
         <!-- Response tabs -->

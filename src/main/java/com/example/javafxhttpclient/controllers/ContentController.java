@@ -6,9 +6,13 @@ import com.example.javafxhttpclient.core.codearea.JSONHighlighter;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.utils.Util;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +29,8 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ContentController implements Initializable {
+    private final String formatButtonIcon = FontAwesomeIcon.FILE_TEXT_ALT.name();
+
     @FXML
     public AnchorPane anchorPane;
 
@@ -69,6 +75,7 @@ public class ContentController implements Initializable {
         });
     }
 
+
     public void onSendButtonClick(ActionEvent event) {
         // validate url
         if (Network.isNotValidUrl(urlTextField.getText())) {
@@ -83,5 +90,13 @@ public class ContentController implements Initializable {
         // TODO
         // get headers
         // get queries
+    }
+
+    public void formatJson() {
+        jsonTabController.formatJson();
+    }
+
+    public String getFormatButtonIcon() {
+        return formatButtonIcon;
     }
 }
