@@ -4,8 +4,6 @@ import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
 
-import java.util.HashMap;
-
 public class NetworkTest {
     public static void main(String[] args) {
         String url = "https://jsonplaceholder.typicode.com/comments";

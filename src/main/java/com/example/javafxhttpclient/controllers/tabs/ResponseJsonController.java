@@ -15,21 +15,17 @@ import java.util.ResourceBundle;
 
 public class ResponseJsonController implements Initializable {
     @FXML
-    AnchorPane anchorPane;
+    private AnchorPane anchorPane;
 
-    EditorArea rawInputArea;
-
-    String jsonContent;
+    private EditorArea rawInputArea;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        jsonContent = "{}";
         String jsonCss = FileManipulator.css(Constants.jsonHighLights);
 
         rawInputArea = new EditorArea();
-        rawInputArea.setEditable(false);
         rawInputArea.addStyleSheet(jsonCss);
-        rawInputArea.setText(jsonContent, new JSONFormatter(), new JSONHighlighter());
+        rawInputArea.setText("{}", new JSONFormatter(), new JSONHighlighter());
 
         VirtualizedScrollPane<EditorArea> codeArea = new VirtualizedScrollPane<>(rawInputArea);
         AnchorPane.setRightAnchor(codeArea, 0.0);
@@ -38,5 +34,13 @@ public class ResponseJsonController implements Initializable {
         AnchorPane.setTopAnchor(codeArea, 0.0);
 
         anchorPane.getChildren().add(codeArea);
+    }
+
+    public EditorArea getCodeArea() {
+        return rawInputArea;
+    }
+
+    public void setJsonContent(String content) {
+        getCodeArea().setText(content, new JSONFormatter(), new JSONHighlighter());
     }
 }

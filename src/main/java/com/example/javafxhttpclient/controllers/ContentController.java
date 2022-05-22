@@ -1,17 +1,17 @@
 package com.example.javafxhttpclient.controllers;
 
-import com.example.javafxhttpclient.controllers.tabs.HeadersTabController;
-import com.example.javafxhttpclient.controllers.tabs.JsonTabController;
-import com.example.javafxhttpclient.controllers.tabs.QueryTabController;
+import com.example.javafxhttpclient.controllers.tabs.*;
 import com.example.javafxhttpclient.core.enums.ContentTabs;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
+import com.example.javafxhttpclient.core.utils.Util;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -46,6 +46,15 @@ public class ContentController implements Initializable {
     public Button sendButton;
 
     @FXML
+    GridPane responseTabGridPane;
+
+    @FXML
+    Label responseStatusCodeLabel;
+
+    @FXML
+    Label responseTimeLabel;
+
+    @FXML
     Button formatButton;
 
     @FXML
@@ -68,6 +77,12 @@ public class ContentController implements Initializable {
 
     @FXML
     QueryTabController queryTabController;
+
+    @FXML
+    ResponseJsonController responseJsonController;
+
+    @FXML
+    ResponseHeadersController responseHeadersController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,20 +116,23 @@ public class ContentController implements Initializable {
             Stage stage = (Stage) splitPane.getScene().getWindow();
             stage.widthProperty().addListener((observableValue, oldValue, newValue) -> splitPane.setDividerPositions(0.14f, 0.6f, 0.65f));
         });
+
+        responseTabGridPane.setPadding(new Insets(5));
     }
 
     public void onSendButtonClick(ActionEvent event) {
         // validate url
-//        if (Network.isNotValidUrl(urlTextField.getText())) {
-//            try {
-//                String errorText = "Invalid url, please try another one \n(e.g. https://example.com)";
-//                Util.showAlertModal(event, Alert.AlertType.ERROR, errorText);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            return;
-//        }
+        if (Network.isNotValidUrl(urlTextField.getText())) {
+            String errorText = "Invalid url, please try another one \n(e.g. https://example.com)";
+            Util.showAlertModal(event, Alert.AlertType.ERROR, errorText);
+            return;
+        }
+
+        // validate json
+        if (!Util.isJsonValid(jsonTabController.getJsonContent())) {
+            Util.showAlertModal(event, Alert.AlertType.ERROR, "Invalid json");
+            return;
+        }
 
         String url = urlTextField.getText();
         HttpMethods method = HttpMethods.valueOf(httpMethodsCombobox.getValue());
@@ -122,24 +140,31 @@ public class ContentController implements Initializable {
         Map<String, String> headerData = headersTabController.getNameAndValues();
         Map<String, String> queryData = queryTabController.getNameAndValues();
 
-        System.out.println(url);
-        System.out.println(method);
-        System.out.println(jsonContent);
-        System.out.println(headerData);
-        System.out.println(queryData);
+//        System.out.println(url);
+//        System.out.println(method);
+//        System.out.println(jsonContent);
+//        System.out.println(headerData);
+//        System.out.println(queryData);
 
         // sen request and handle response
-        String errorMessage = null;
         Response response = null;
 
         try {
             Network network = new Network(url);
+            network.setRequestHeaders(headerData);
+            network.setRequestBody(jsonContent);
+            network.setRequestQuery(queryData);
             response = network.send(method);
         } catch (Exception e) {
-            errorMessage = e.getMessage();
+            Util.showAlertModal(event, Alert.AlertType.ERROR, e.getMessage());
+            e.printStackTrace();
         }
 
-        handleResponse(response, errorMessage);
+        if (response == null) {
+            return;
+        }
+
+        handleResponse(response);
     }
 
     public void formatJson() {
@@ -150,19 +175,25 @@ public class ContentController implements Initializable {
         return formatButtonIcon;
     }
 
-    private void handleResponse(Response response, String errorMessage) {
-        if (errorMessage != null) {
-            System.err.print("Error occurred: " + errorMessage);
-            return;
-        }
-
+    private void handleResponse(Response response) {
         if (response != null) {
-            response.printFormattedJson();
-            System.out.println("end of line");
+            responseJsonController.setJsonContent(response.getData());
 
-            for (int i = 0; i < 1000; i++) {
-                System.out.println(Math.random());
+            responseHeadersController.setResponseHeaders(response.getHeaders());
+
+            if (response.getStatusCode() <= 299) {
+                responseStatusCodeLabel.setStyle("-fx-background-color: #2d8a48");
+            } else if (response.getStatusCode() <= 399) {
+                responseStatusCodeLabel.setStyle("-fx-background-color: #8a8f33");
+            } else {
+                responseStatusCodeLabel.setStyle("-fx-background-color: #8f3333");
             }
+
+            responseStatusCodeLabel.setText(
+                    response.getStatusCode() + " " + Util.getStatusCodeText(response.getStatusCode())
+            );
+            responseTimeLabel.setText(response.getResponseTime() + " ms");
+            System.out.println("end of line");
         }
     }
 }

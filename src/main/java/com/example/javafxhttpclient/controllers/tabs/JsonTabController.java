@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class JsonTabController implements Initializable {
     @FXML
-    AnchorPane anchorPane;
+    private AnchorPane anchorPane;
 
     private EditorArea rawInputArea;
 
@@ -50,6 +50,7 @@ public class JsonTabController implements Initializable {
     }
 
     public void formatJson() {
+
         rawInputArea.setText(getJsonContent(), new JSONFormatter(), new JSONHighlighter());
     }
 }

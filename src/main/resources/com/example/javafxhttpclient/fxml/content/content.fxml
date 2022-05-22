@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.shape.Box?>
+<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="anchorPane"
             fx:controller="com.example.javafxhttpclient.controllers.ContentController"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -89,11 +91,32 @@
                     AnchorPane.bottomAnchor="0">
             <!-- Hollow place for symmetric-nes -->
             <GridPane
+                    fx:id="responseTabGridPane"
                     AnchorPane.topAnchor="0"
                     AnchorPane.leftAnchor="0"
                     AnchorPane.rightAnchor="0"
+                    hgap="10"
                     prefHeight="35"
-                    styleClass="bg-primary-dim"/>
+                    styleClass="bg-primary-dim">
+
+                <Label GridPane.columnIndex="0"
+                       fx:id="responseStatusCodeLabel"
+                       alignment="CENTER"
+                       minWidth="100"
+                       maxWidth="700"
+                       prefHeight="35"
+                       styleClass="bg-primary, bold"
+                />
+
+                <Label GridPane.columnIndex="1"
+                       fx:id="responseTimeLabel"
+                       alignment="CENTER"
+                       prefWidth="100.0"
+                       prefHeight="35"
+                       styleClass="bg-primary"
+                />
+            </GridPane>
+
             <!--Tabs for preview and headers -->
             <TabPane AnchorPane.topAnchor="35"
                      AnchorPane.leftAnchor="0"
@@ -101,10 +124,10 @@
                      AnchorPane.bottomAnchor="0"
                      prefHeight="300.0">
                 <Tab closable="false" text="Preview">
-                    <fx:include source="tabs/responseJson.fxml"/>
+                    <fx:include fx:id="responseJson" source="tabs/responseJson.fxml"/>
                 </Tab>
                 <Tab closable="false" text="Headers">
-                    <fx:include source="tabs/responseHeaders.fxml"/>
+                    <fx:include fx:id="responseHeaders" source="tabs/responseHeaders.fxml"/>
                 </Tab>
             </TabPane>
         </AnchorPane>

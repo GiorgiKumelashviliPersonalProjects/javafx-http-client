@@ -9,6 +9,7 @@ module com.example.javafxhttpclient {
     requires java.datatransfer;
     requires java.desktop;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.core;
     requires org.json;
 
     requires de.jensd.fx.glyphs.fontawesome;
@@ -27,4 +28,6 @@ module com.example.javafxhttpclient {
 
     exports com.example.javafxhttpclient.controllers.tabs;
     opens com.example.javafxhttpclient.controllers.tabs to javafx.fxml;
+
+    exports com.example.javafxhttpclient.core.models.fxml;
 }

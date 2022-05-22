@@ -55,7 +55,8 @@
 .white-fill { -fx-fill: fx-light; }
 .cursor-pointer { -fx-cursor: hand }
 .bg-primary-dim { -fx-background-color: fx-primary-dim }
-
+.bg-primary { -fx-background-color: fx-primary }
+.bold { -fx-font-weight: bold; }
 
 /*for testing*/
 .red {

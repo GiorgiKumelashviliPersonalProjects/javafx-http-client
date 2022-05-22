@@ -6,7 +6,7 @@
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1">
     <!-- Top menu bar -->
-    <fx:include fx:id="sidebar" source="fxml/content/menubar.fxml"/>
+    <fx:include fx:id="menuBar" source="fxml/content/menubar.fxml"/>
 
     <!-- Main content -->
     <fx:include fx:id="content" source="fxml/content/content.fxml"/>
