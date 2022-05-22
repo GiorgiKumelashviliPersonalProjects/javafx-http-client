@@ -8,12 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 
 /**
- * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  * TODO -> all treeview actions (create,rename,delete from modal and context menu and menubar)
  * TODO -> filter tree items
+ *
+ * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  *
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
@@ -38,7 +38,5 @@ public class Main extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
-
-
     }
 }

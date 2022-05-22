@@ -14,6 +14,7 @@ module com.example.javafxhttpclient {
 
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
+    requires annotations;
 
     exports com.example.javafxhttpclient.core.codearea;
 

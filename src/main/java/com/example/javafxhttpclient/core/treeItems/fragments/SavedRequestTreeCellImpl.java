@@ -1,5 +1,7 @@
 package com.example.javafxhttpclient.core.treeItems.fragments;
 
+import com.example.javafxhttpclient.controllers.SidebarController;
+import javafx.event.ActionEvent;
 import javafx.scene.control.TreeCell;
 
 public class SavedRequestTreeCellImpl extends TreeCell<String> {
@@ -10,10 +12,26 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
         if (empty) {
             setText(null);
             setGraphic(null);
-        } else {
+        }
+        else {
             setText(getItem() == null ? "" : getItem());
             setGraphic(getTreeItem().getGraphic());
-            setContextMenu(((SavedRequestTreeItemAbstr) getTreeItem()).getMenu());
+            SavedRequestTreeItemAbstract treeItem = (SavedRequestTreeItemAbstract) getTreeItem();
+
+//            System.out.println(getTreeItem());
+//            System.out.println(getTreeItem().getClass());
+//            System.out.println(treeItem instanceof RequestTreeItem);
+//
+//            if (treeItem instanceof RequestTreeItem) {
+//                ((RequestTreeItem) treeItem).handleDelete();
+//                ((RequestTreeItem) treeItem).handleRename();
+//            }
+
+            // more smooth
+            setOnContextMenuRequested(e -> {
+                treeItem.getMenu().show(getScene().getWindow(), e.getScreenX(), e.getScreenY());
+            });
         }
     }
+
 }

@@ -20,7 +20,7 @@
           style="-fx-padding: 5px;-fx-background-color: fx-primary;">
         <TextField HBox.hgrow="ALWAYS" promptText="Filter"/>
 
-        <Button styleClass="cursor-pointer" onAction="#openModal">
+        <Button styleClass="cursor-pointer" onAction="#openCreateRequestFolder">
             <graphic>
                 <FontAwesomeIconView styleClass="white-fill" glyphName="PLUS"/>
             </graphic>

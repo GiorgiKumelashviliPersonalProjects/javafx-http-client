@@ -50,7 +50,7 @@ public class SidebarController implements Initializable {
         toggleOnSingleClickTreeItem();
     }
 
-    public void openModal(ActionEvent event) throws IOException {
+    public void openCreateRequestFolder(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader modalFxml = FileManipulator.fxmlLoader(Constants.addSavedRequestTreeItem);
         String mainCss = FileManipulator.css(Constants.mainCss);
@@ -70,13 +70,12 @@ public class SidebarController implements Initializable {
             TreeItem<String> selectedTreeItem = savedRequests.getSelectionModel().getSelectedItem();
 
             // single click on primary mouse
-            if (
+            if (selectedTreeItem != null &&
                     e.getButton().equals(MouseButton.PRIMARY) &&
-                            e.getClickCount() == 1 &&
-                            selectedTreeItem.getChildren().size() > 0
+                    e.getClickCount() == 1 &&
+                    selectedTreeItem.getChildren().size() > 0
             ) {
                 selectedTreeItem.setExpanded(!selectedTreeItem.isExpanded());
-
                 System.out.println(selectedTreeItem.getChildren());
             }
         });

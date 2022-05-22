@@ -1,10 +1,9 @@
 package com.example.javafxhttpclient.core.treeItems.fragments;
 
-import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
-public class FolderTreeItem extends SavedRequestTreeItemAbstr {
+public class FolderTreeItem extends SavedRequestTreeItemAbstract {
     public FolderTreeItem(String name) {
         setValue(name);
     }
@@ -13,10 +12,10 @@ public class FolderTreeItem extends SavedRequestTreeItemAbstr {
     public ContextMenu getMenu() {
         ContextMenu contextMenu = new ContextMenu();
 
-        MenuItem deleteItem = new MenuItem("Delete");
-        MenuItem createNewRequest = new MenuItem("Create Request");
-        MenuItem rename = new MenuItem("Rename");
-        contextMenu.getItems().addAll(createNewRequest, deleteItem, rename);
+        createItem = new MenuItem("Create Request");
+        deleteItem = new MenuItem("Delete");
+        renameItem = new MenuItem("Rename");
+        contextMenu.getItems().addAll(createItem, deleteItem, renameItem);
 
         // add context menu and actions
         return contextMenu;
