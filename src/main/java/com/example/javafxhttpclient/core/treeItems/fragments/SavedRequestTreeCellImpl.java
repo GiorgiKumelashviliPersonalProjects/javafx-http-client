@@ -30,6 +30,7 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
             // more smooth
             setOnContextMenuRequested(e -> {
                 treeItem.getMenu().show(getScene().getWindow(), e.getScreenX(), e.getScreenY());
+                e.consume();
             });
         }
     }

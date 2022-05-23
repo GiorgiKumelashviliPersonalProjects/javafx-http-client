@@ -47,6 +47,7 @@ public class SidebarController implements Initializable {
         savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl());
         savedRequests.setRoot(invisibleRoot);
         savedRequests.setShowRoot(false);
+        //TODO es iwvevs zogierti marjvenati dacherisas context menus ar chvenebas
         toggleOnSingleClickTreeItem();
     }
 
@@ -76,7 +77,7 @@ public class SidebarController implements Initializable {
                     selectedTreeItem.getChildren().size() > 0
             ) {
                 selectedTreeItem.setExpanded(!selectedTreeItem.isExpanded());
-                System.out.println(selectedTreeItem.getChildren());
+                e.consume();
             }
         });
     }
