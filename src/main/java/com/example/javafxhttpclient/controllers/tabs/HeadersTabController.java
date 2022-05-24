@@ -39,7 +39,6 @@ public class HeadersTabController implements HeaderInputs {
                     !pair.getValue().isBlank() &&
                     !pair.getValue().isEmpty()
             ) {
-                System.out.println("========================");
                 headers.put(pair.getKey().trim(), pair.getValue().trim());
             }
         }

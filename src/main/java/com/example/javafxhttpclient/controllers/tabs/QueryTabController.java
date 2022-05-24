@@ -19,7 +19,6 @@ public class QueryTabController implements HeaderInputs {
         HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
 
         queryTabContent.getChildren().add(headerInputsComponent);
-        System.out.println(event);
     }
 
     public ObservableList<HeaderInputsComponent> getHeaderInputComponents() {
@@ -28,8 +27,6 @@ public class QueryTabController implements HeaderInputs {
 
     public Map<String, String> getNameAndValues() {
         Map<String, String> headers = new HashMap<>();
-
-        System.out.println(getHeaderInputComponents());
 
         // get header key and value
         for (HeaderInputsComponent headerInputsComponent : getHeaderInputComponents()) {
@@ -43,7 +40,6 @@ public class QueryTabController implements HeaderInputs {
                     !pair.getValue().isBlank() &&
                     !pair.getValue().isEmpty()
             ) {
-                System.out.println("========================");
                 headers.put(pair.getKey().trim(), pair.getValue().trim());
             }
         }

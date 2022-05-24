@@ -21,6 +21,7 @@ public class SavedRequestTreeItem {
     private final SavedTreeItemType savedTreeItemType;
     private final String name;
     private SavedRequestTreeItemAbstract item;
+
     private final List<SavedRequestTreeItem> children = new ArrayList<>();
 
     public SavedRequestTreeItem(SavedTreeItemType savedTreeItemType, String name) {
@@ -64,5 +65,17 @@ public class SavedRequestTreeItem {
         if (savedTreeItemType == SavedTreeItemType.FOLDER) {
             item = new FolderTreeItem(name);
         }
+    }
+
+    public SavedTreeItemType getSavedTreeItemType() {
+        return savedTreeItemType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<SavedRequestTreeItem> getChildren() {
+        return children;
     }
 }

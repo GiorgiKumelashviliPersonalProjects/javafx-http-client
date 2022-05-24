@@ -18,7 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Util {
-    public static void showAlertModal(ActionEvent event, Alert.AlertType alertType, String text) {
+    public static void showAlertModal(Alert.AlertType alertType, String text) {
         Stage stage = new Stage();
         FXMLLoader modalFxml = FileManipulator.fxmlLoader(Constants.showModal);
         String mainCss = FileManipulator.css(Constants.mainCss);
@@ -39,7 +39,7 @@ public class Util {
             stage.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1));
 
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            // stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -104,5 +104,9 @@ public class Util {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static boolean isStringValid(String test) {
+        return test != null && !test.isEmpty() && !test.isBlank();
     }
 }

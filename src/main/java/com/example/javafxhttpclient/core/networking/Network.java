@@ -83,7 +83,6 @@ public class Network {
             BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
                 sb.append(line);
             }
             elapsedTime = System.currentTimeMillis() - startTime;
@@ -187,7 +186,5 @@ public class Network {
         }
 
         targetURL = new URL(url);
-
-        System.out.println(url);
     }
 }

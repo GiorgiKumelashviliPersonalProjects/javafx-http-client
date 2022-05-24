@@ -12,11 +12,15 @@ module com.example.javafxhttpclient {
     requires com.fasterxml.jackson.core;
     requires org.json;
 
+    requires event.bus;
+
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
     requires annotations;
 
     exports com.example.javafxhttpclient.core.codearea;
+    exports com.example.javafxhttpclient.core.treeItems;
+    exports com.example.javafxhttpclient.core.enums;
 
     exports com.example.javafxhttpclient.controllers;
     opens com.example.javafxhttpclient.controllers to javafx.fxml;

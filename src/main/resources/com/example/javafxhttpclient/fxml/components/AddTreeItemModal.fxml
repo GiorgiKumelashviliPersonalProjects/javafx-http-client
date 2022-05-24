@@ -13,10 +13,24 @@
             fx:controller="com.example.javafxhttpclient.core.fxml.AddTreeItemModalController"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/javafx/">
-    <TextField layoutX="14.0" layoutY="36.0" promptText="Enter display name"/>
+    <TextField fx:id="savedTreeItemTextField" layoutX="14.0" layoutY="36.0" promptText="Enter display name"/>
     <Label layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="123.0" text="Display name"/>
     <ComboBox fx:id="savedTreeItemTypeComboBox" layoutX="208.0" layoutY="36.0" prefWidth="150.0" promptText="Type"/>
     <Label layoutX="208.0" layoutY="14.0" prefHeight="16.0" prefWidth="123.0" text="Item type"/>
-    <Button layoutX="495.0" layoutY="362.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="91.0" text="Add"/>
-    <Button onAction="#onClose" layoutX="377.0" layoutY="362.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="106.0" text="Close"/>
+
+    <Button fx:id="onAddButton"
+            layoutX="495.0"
+            layoutY="362.0"
+            mnemonicParsing="false"
+            prefHeight="24.0"
+            prefWidth="91.0"
+            text="Add"/>
+
+    <Button fx:id="onCloseButton"
+            layoutX="377.0"
+            layoutY="362.0"
+            mnemonicParsing="false"
+            prefHeight="24.0"
+            prefWidth="106.0"
+            text="Close"/>
 </AnchorPane>

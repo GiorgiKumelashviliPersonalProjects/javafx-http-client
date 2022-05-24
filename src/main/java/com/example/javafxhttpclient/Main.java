@@ -18,6 +18,7 @@ import java.io.IOException;
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
  * TODO -> have http send on different thread
+ * TODO -> make tree items focus losable !!! (bug when folder is selected and trying to add new folder on root)
  */
 public class Main extends Application {
     public static void main(String[] args) {

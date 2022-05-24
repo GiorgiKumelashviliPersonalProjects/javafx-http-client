@@ -9,7 +9,7 @@
 }
 
 .context-menu .menu-item {
-	-fx-padding: 10px 20px;
+	-fx-padding: 7px 20px;
 }
 
 .context-menu .menu-item:hover,

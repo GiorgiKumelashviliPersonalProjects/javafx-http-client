@@ -26,10 +26,10 @@ public class MenuBarController implements Initializable {
         // key combination
         KeyCombination keyCombination = new KeyCodeCombination(KeyCode.F2, KeyCombination.CONTROL_DOWN);
         newRequest.setAccelerator(keyCombination);
-        newRequest.setOnAction(event -> {
-            System.out.println("triggered");
-            System.out.println(event.toString());
-        });
+        // newRequest.setOnAction(event -> {
+        //     System.out.println("triggered");
+        //     System.out.println(event.toString());
+        // });
 
 
         MenuItem newFolder = new MenuItem("New Folder");

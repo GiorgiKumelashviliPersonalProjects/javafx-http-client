@@ -8,7 +8,6 @@ import com.example.javafxhttpclient.core.networking.Response;
 import com.example.javafxhttpclient.core.utils.Util;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -120,17 +119,17 @@ public class ContentController implements Initializable {
         responseTabGridPane.setPadding(new Insets(5));
     }
 
-    public void onSendButtonClick(ActionEvent event) {
+    public void onSendButtonClick() {
         // validate url
         if (Network.isNotValidUrl(urlTextField.getText())) {
             String errorText = "Invalid url, please try another one \n(e.g. https://example.com)";
-            Util.showAlertModal(event, Alert.AlertType.ERROR, errorText);
+            Util.showAlertModal(Alert.AlertType.ERROR, errorText);
             return;
         }
 
         // validate json
         if (!Util.isJsonValid(jsonTabController.getJsonContent())) {
-            Util.showAlertModal(event, Alert.AlertType.ERROR, "Invalid json");
+            Util.showAlertModal(Alert.AlertType.ERROR, "Invalid json");
             return;
         }
 
@@ -156,7 +155,7 @@ public class ContentController implements Initializable {
             network.setRequestQuery(queryData);
             response = network.send(method);
         } catch (Exception e) {
-            Util.showAlertModal(event, Alert.AlertType.ERROR, e.getMessage());
+            Util.showAlertModal(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
 
