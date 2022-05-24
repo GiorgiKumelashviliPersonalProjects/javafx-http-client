@@ -11,9 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,8 +46,6 @@ public class SidebarController implements Initializable {
         savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl());
         savedRequests.setRoot(invisibleRoot);
         savedRequests.setShowRoot(false);
-        //TODO es iwvevs zogierti marjvenati dacherisas context menus ar chvenebas
-        toggleOnSingleClickTreeItem();
     }
 
     public void openCreateRequestFolder(ActionEvent event) throws IOException {
@@ -64,21 +61,5 @@ public class SidebarController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
         stage.show();
-    }
-
-    public void toggleOnSingleClickTreeItem() {
-        savedRequests.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            TreeItem<String> selectedTreeItem = savedRequests.getSelectionModel().getSelectedItem();
-
-            // single click on primary mouse
-            if (selectedTreeItem != null &&
-                    e.getButton().equals(MouseButton.PRIMARY) &&
-                    e.getClickCount() == 1 &&
-                    selectedTreeItem.getChildren().size() > 0
-            ) {
-                selectedTreeItem.setExpanded(!selectedTreeItem.isExpanded());
-                e.consume();
-            }
-        });
     }
 }

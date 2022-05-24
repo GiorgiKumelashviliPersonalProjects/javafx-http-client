@@ -1,10 +1,10 @@
 package com.example.javafxhttpclient.core.treeItems.fragments;
 
-import com.example.javafxhttpclient.controllers.SidebarController;
-import javafx.event.ActionEvent;
 import javafx.scene.control.TreeCell;
+import javafx.scene.input.MouseButton;
 
 public class SavedRequestTreeCellImpl extends TreeCell<String> {
+
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -12,24 +12,20 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
         if (empty) {
             setText(null);
             setGraphic(null);
-        }
-        else {
+        } else {
             setText(getItem() == null ? "" : getItem());
             setGraphic(getTreeItem().getGraphic());
             SavedRequestTreeItemAbstract treeItem = (SavedRequestTreeItemAbstract) getTreeItem();
 
-//            System.out.println(getTreeItem());
-//            System.out.println(getTreeItem().getClass());
-//            System.out.println(treeItem instanceof RequestTreeItem);
-//
-//            if (treeItem instanceof RequestTreeItem) {
-//                ((RequestTreeItem) treeItem).handleDelete();
-//                ((RequestTreeItem) treeItem).handleRename();
-//            }
+            setOnMouseClicked(e -> {
+                if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 1 && treeItem.getChildren().size() > 0) {
+                    treeItem.setExpanded(!treeItem.isExpanded());
+                }
 
-            // more smooth
-            setOnContextMenuRequested(e -> {
-                treeItem.getMenu().show(getScene().getWindow(), e.getScreenX(), e.getScreenY());
+                if (e.getButton().equals(MouseButton.SECONDARY)) {
+                    treeItem.getMenu().show(getScene().getWindow(), e.getScreenX(), e.getScreenY());
+                }
+
                 e.consume();
             });
         }
