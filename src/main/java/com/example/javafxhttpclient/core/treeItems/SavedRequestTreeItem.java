@@ -23,7 +23,7 @@ public class SavedRequestTreeItem {
     private String name;
     private SavedRequestTreeItemAbstract item;
 
-    private final List<SavedRequestTreeItem> children = new ArrayList<>();
+    private List<SavedRequestTreeItem> children = new ArrayList<>();
 
     public SavedRequestTreeItem(int id, SavedTreeItemType savedTreeItemType, String name) {
         this.id = id;
@@ -45,6 +45,18 @@ public class SavedRequestTreeItem {
         // add fxml
         List<TreeItem<String>> fxmlTreeItems = Arrays.stream(params).map(SavedRequestTreeItem::getItem).toList();
         item.getChildren().addAll(fxmlTreeItems);
+    }
+
+    public void setChildren(List<SavedRequestTreeItem> children) {
+        this.children = children;
+    }
+
+    public void clearChildren() {
+        this.children = new ArrayList<>();
+    }
+
+    public SavedRequestTreeItem cloneEmpty() {
+        return new SavedRequestTreeItem(id, savedTreeItemType, name);
     }
 
     private void setImage() {
@@ -91,7 +103,7 @@ public class SavedRequestTreeItem {
     }
 
     public void setChildName(int id, String newName) {
-        for (SavedRequestTreeItem child: children) {
+        for (SavedRequestTreeItem child : children) {
             if (child.getId() == id) {
                 var foundIndex = children.indexOf(child);
                 var foundElement = children.get(foundIndex);

@@ -23,6 +23,8 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
             setText(getItem() == null ? "" : getItem());
             setGraphic(treeItem.getGraphic());
 
+            // treeItem.setExpanded(true);
+
             // set context menu item actions here
             if (treeItem.createItem != null) treeItem.createItem.setOnAction(sidebarController::create);
             if (treeItem.renameItem != null) treeItem.renameItem.setOnAction(sidebarController::rename);
@@ -53,6 +55,8 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
     }
 }
 
+
+// implementation of renaming inside tree item by using inline text field
 //    private void renameAction(SavedRequestTreeItemAbstract treeItem) {
 //        String beforeText = getItem();
 //        TextField tempTextField = new TextField();

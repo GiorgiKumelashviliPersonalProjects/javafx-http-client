@@ -4,18 +4,22 @@ import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
 import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
+import com.example.javafxhttpclient.core.treeItems.FilteredSavedRequestTreeCellImpl;
 import com.example.javafxhttpclient.core.treeItems.SavedRequestTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.FolderTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeCellImpl;
 import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeItemAbstract;
 import com.example.javafxhttpclient.core.utils.Util;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +35,9 @@ public class SidebarController implements Initializable {
 
     @FXML
     public TreeView<String> savedRequestsTreeView;
+
+    @FXML
+    public TextField filterTextField;
 
     public TreeItem<String> invisibleRoot;
 
@@ -59,19 +66,18 @@ public class SidebarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         savedRequestsTreeView.setCellFactory(p -> new SavedRequestTreeCellImpl(this));
-        savedRequestsTreeView.setEditable(true);
         savedRequestsTreeView.setRoot(invisibleRoot);
         savedRequestsTreeView.setShowRoot(false);
+        debounceFilter();
     }
 
     // methods
+
     public void onCreateButtonClick(ActionEvent event) {
         // lose focus
-        System.out.println("request focus");
         rootParent.requestFocus();
         this.create(event);
     }
-
 
     public void create(ActionEvent event) {
         // memoize here
@@ -97,7 +103,6 @@ public class SidebarController implements Initializable {
     }
 
     public void rename(ActionEvent event) {
-        System.out.println("rename");
         var selectedTreeItem = savedRequestsTreeView.getSelectionModel().getSelectedItem();
 
         try {
@@ -119,7 +124,6 @@ public class SidebarController implements Initializable {
     }
 
     public void delete(ActionEvent event) {
-        System.out.println("delete");
         CheckModalWindow checkModalWindow = new CheckModalWindow();
 
         try {
@@ -136,8 +140,43 @@ public class SidebarController implements Initializable {
         }
     }
 
-    public void filter(ActionEvent event) {
-        event.consume();
+    public void debounceFilter() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        filterTextField.textProperty().addListener((observable, oldValue, filterText) -> {
+            pause.setOnFinished(event -> {
+                if (filterText.isEmpty()) {
+                    invisibleRoot.getChildren().clear();
+                    invisibleRoot.getChildren().addAll(rootTreeItems.stream().map(SavedRequestTreeItem::getItem).toList());
+                    return;
+                }
+
+                List<SavedRequestTreeItem> filteredItems = new ArrayList<>();
+
+                // filter ui here
+                for (var parent : rootTreeItems) {
+                    int childMatched = 0;
+                    SavedRequestTreeItem tempParent = parent.cloneEmpty();
+                    tempParent.getItem().setExpanded(true);
+
+                    // first check children
+                    for (var child : parent.getChildren()) {
+                        if (child.getName().contains(filterText)) {
+                            childMatched++;
+                            tempParent.getChildren().add(child);
+                            tempParent.setChildren(child);
+                        }
+                    }
+
+                    if (tempParent.getName().contains(filterText) || childMatched != 0) {
+                        filteredItems.add(tempParent);
+                    }
+                }
+
+                invisibleRoot.getChildren().clear();
+                invisibleRoot.getChildren().addAll(filteredItems.stream().map(SavedRequestTreeItem::getItem).toList());
+            });
+            pause.playFromStart();
+        });
     }
 
     private void addTreeItems(List<SavedRequestTreeItem> data) {
@@ -155,8 +194,7 @@ public class SidebarController implements Initializable {
 
             // add data
             rootTreeItems.add(item);
-        }
-        else if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
+        } else if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
             if (item.getSavedTreeItemType() == SavedTreeItemType.FOLDER) {
                 Util.showAlertModal(Alert.AlertType.ERROR, "Allowed only request, cannot nest folders !");
                 return;
@@ -221,8 +259,6 @@ public class SidebarController implements Initializable {
         for (SavedRequestTreeItem parent : rootTreeItems) {
             if (parent.getId() == id) {
                 rootTreeItems.remove(parent);
-
-                System.out.println(Arrays.toString(rootTreeItems.toArray()));
                 break;
             }
 

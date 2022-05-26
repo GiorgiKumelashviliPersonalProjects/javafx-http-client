@@ -18,7 +18,10 @@
           AnchorPane.rightAnchor="0"
           AnchorPane.leftAnchor="0"
           style="-fx-padding: 5px;-fx-background-color: fx-primary;">
-        <TextField HBox.hgrow="ALWAYS" promptText="Filter"/>
+        <TextField fx:id="filterTextField"
+                   HBox.hgrow="ALWAYS"
+                   promptText="Filter"/>
+        <!--                   onKeyPressed="#filter"-->
 
         <Button styleClass="cursor-pointer" onAction="#onCreateButtonClick">
             <graphic>

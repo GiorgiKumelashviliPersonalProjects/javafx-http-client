@@ -59,7 +59,6 @@ public class Response {
 
         try {
             tree = mapper.readTree(data.toString());
-            System.out.println(mapper.writeValueAsString(tree));;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

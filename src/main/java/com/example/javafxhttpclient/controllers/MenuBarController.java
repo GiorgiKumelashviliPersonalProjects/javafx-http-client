@@ -35,10 +35,9 @@ public class MenuBarController implements Initializable {
         MenuItem newFolder = new MenuItem("New Folder");
         MenuItem save = new MenuItem("Save");
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
-        MenuItem preferences = new MenuItem("Preferences");
         MenuItem quit = new MenuItem("Quit");
 
-        fileMenu.getItems().addAll(newRequest, newFolder, save, separatorMenuItem, preferences, quit);
+        fileMenu.getItems().addAll(newRequest, newFolder, save, separatorMenuItem, quit);
 
 
         Menu windowMenu = new Menu("Window");

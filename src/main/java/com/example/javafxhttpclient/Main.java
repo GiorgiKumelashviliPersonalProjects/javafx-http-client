@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * TODO -> filter tree items
+ * TODO -> menubar
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  * TODO -> have http send on different thread
  *
