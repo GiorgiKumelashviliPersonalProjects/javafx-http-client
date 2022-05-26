@@ -10,15 +10,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * TODO -> all treeview actions (create,rename,delete from modal and context menu and menubar)
  * TODO -> filter tree items
- *
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
+ * TODO -> have http send on different thread
  *
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
- * TODO -> have http send on different thread
- * TODO -> make tree items focus losable !!! (bug when folder is selected and trying to add new folder on root)
+ * TODO -> all treeview actions (create,rename,delete menu)
  */
 public class Main extends Application {
     public static void main(String[] args) {

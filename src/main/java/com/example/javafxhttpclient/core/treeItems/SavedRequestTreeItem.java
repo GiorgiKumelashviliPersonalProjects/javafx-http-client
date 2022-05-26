@@ -73,15 +73,19 @@ public class SavedRequestTreeItem {
     public int getId() {
         return id;
     }
+
     public TreeItem<String> getItem() {
         return item;
     }
+
     public String getName() {
         return name;
     }
+
     public SavedTreeItemType getSavedTreeItemType() {
         return savedTreeItemType;
     }
+
     public List<SavedRequestTreeItem> getChildren() {
         return children;
     }
@@ -96,5 +100,9 @@ public class SavedRequestTreeItem {
                 break;
             }
         }
+    }
+
+    public void removeChild(SavedRequestTreeItem child) {
+        children.remove(child);
     }
 }

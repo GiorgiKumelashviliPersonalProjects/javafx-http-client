@@ -2,6 +2,7 @@ package com.example.javafxhttpclient.controllers;
 
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
+import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
 import com.example.javafxhttpclient.core.treeItems.SavedRequestTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.FolderTreeItem;
@@ -19,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +30,7 @@ public class SidebarController implements Initializable {
     public AnchorPane rootParent;
 
     @FXML
-    public TreeView<String> savedRequests;
+    public TreeView<String> savedRequestsTreeView;
 
     public TreeItem<String> invisibleRoot;
 
@@ -51,20 +53,29 @@ public class SidebarController implements Initializable {
         data.add(root2);
         data.add(root3);
 
-        setTreeItems(data);
+        addTreeItems(data);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        savedRequests.setCellFactory(p -> new SavedRequestTreeCellImpl(this));
-        savedRequests.setEditable(true);
-        savedRequests.setRoot(invisibleRoot);
-        savedRequests.setShowRoot(false);
+        savedRequestsTreeView.setCellFactory(p -> new SavedRequestTreeCellImpl(this));
+        savedRequestsTreeView.setEditable(true);
+        savedRequestsTreeView.setRoot(invisibleRoot);
+        savedRequestsTreeView.setShowRoot(false);
     }
 
     // methods
+    public void onCreateButtonClick(ActionEvent event) {
+        // lose focus
+        System.out.println("request focus");
+        rootParent.requestFocus();
+        this.create(event);
+    }
+
+
     public void create(ActionEvent event) {
-        System.out.println("create");
+        // memoize here
+        final boolean isTreeViewRootParentFocused = rootParent.isFocused();
 
         try {
             AddTreeItemModalWindow addTreeItemModalWindow = new AddTreeItemModalWindow();
@@ -75,7 +86,7 @@ public class SidebarController implements Initializable {
                 if (newType != null && Util.isStringValid(newName)) {
                     int randomId = Util.randInt(1000);
                     SavedRequestTreeItem newRootItem = new SavedRequestTreeItem(randomId, newType, newName);
-                    addTreeItemToSpecificLevel(newRootItem);
+                    addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
                 }
             });
         } catch (IOException e) {
@@ -87,7 +98,7 @@ public class SidebarController implements Initializable {
 
     public void rename(ActionEvent event) {
         System.out.println("rename");
-        var selectedTreeItem = savedRequests.getSelectionModel().getSelectedItem();
+        var selectedTreeItem = savedRequestsTreeView.getSelectionModel().getSelectedItem();
 
         try {
             RenameTreeItemModalWindow renameTreeItemModalWindow = new RenameTreeItemModalWindow();
@@ -109,45 +120,75 @@ public class SidebarController implements Initializable {
 
     public void delete(ActionEvent event) {
         System.out.println("delete");
-        event.consume();
+        CheckModalWindow checkModalWindow = new CheckModalWindow();
+
+        try {
+            checkModalWindow.show(() -> {
+                if (checkModalWindow.isAnswerYes()) {
+                    // delete
+                    deleteTreeItemToSpecificLevel();
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            event.consume();
+        }
     }
 
     public void filter(ActionEvent event) {
         event.consume();
     }
 
-    private void setTreeItems(List<SavedRequestTreeItem> data) {
+    private void addTreeItems(List<SavedRequestTreeItem> data) {
         rootTreeItems = data;
         invisibleRoot.getChildren().addAll(data.stream().map(SavedRequestTreeItem::getItem).toList());
     }
 
-    private void addTreeItemToSpecificLevel(SavedRequestTreeItem item) {
-        var selectedTreeItem = savedRequests.getSelectionModel().getSelectedItem();
+    private void addTreeItemToSpecificLevel(SavedRequestTreeItem item, boolean isTreeViewRootParentFocused) {
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
+        int id = selectedTreeItem.getId();
 
-        rootTreeItems.add(item);
+        if (isTreeViewRootParentFocused) {
+            // fxml
+            invisibleRoot.getChildren().addAll(item.getItem());
 
-        if (selectedTreeItem != null && selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
+            // add data
+            rootTreeItems.add(item);
+        }
+        else if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
             if (item.getSavedTreeItemType() == SavedTreeItemType.FOLDER) {
                 Util.showAlertModal(Alert.AlertType.ERROR, "Allowed only request, cannot nest folders !");
                 return;
             }
 
-            // allowed here only if selected is folder and item type is request
+            // fxml ( allowed here only if selected is folder and item type is request )
             selectedTreeItem.getChildren().add(item.getItem());
+
+            // add data to children of already existing item in root
+            for (SavedRequestTreeItem parent : rootTreeItems) {
+                if (parent.getId() == selectedTreeItem.getId()) {
+                    parent.getChildren().add(item);
+                    break;
+                }
+            }
         } else {
+            // fxml
             invisibleRoot.getChildren().addAll(item.getItem());
 
+            // add data
+            rootTreeItems.add(item);
         }
     }
 
     private void renameTreeItemToSpecificLevel(String newName) {
-        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequests.getSelectionModel().getSelectedItem();
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
 
         // set fxml
         selectedTreeItem.setValue(newName);
 
-        // update data in java
+        // update data
         for (SavedRequestTreeItem parent : rootTreeItems) {
             if (parent.getId() == id) {
                 var foundIndex = rootTreeItems.indexOf(parent);
@@ -157,11 +198,39 @@ public class SidebarController implements Initializable {
                 break;
             }
 
-            for (SavedRequestTreeItem child: parent.getChildren()) {
+            for (SavedRequestTreeItem child : parent.getChildren()) {
                 if (child.getId() == id) {
                     var foundParentIndex = rootTreeItems.indexOf(parent);
                     var foundParentElement = rootTreeItems.get(foundParentIndex);
                     foundParentElement.setChildName(id, newName);
+                    rootTreeItems.set(foundParentIndex, foundParentElement);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void deleteTreeItemToSpecificLevel() {
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
+        int id = selectedTreeItem.getId();
+
+        // fxml
+        selectedTreeItem.getParent().getChildren().remove(selectedTreeItem);
+
+        // delete data
+        for (SavedRequestTreeItem parent : rootTreeItems) {
+            if (parent.getId() == id) {
+                rootTreeItems.remove(parent);
+
+                System.out.println(Arrays.toString(rootTreeItems.toArray()));
+                break;
+            }
+
+            for (SavedRequestTreeItem child : parent.getChildren()) {
+                if (child.getId() == id) {
+                    var foundParentIndex = rootTreeItems.indexOf(parent);
+                    var foundParentElement = rootTreeItems.get(foundParentIndex);
+                    foundParentElement.removeChild(child);
                     rootTreeItems.set(foundParentIndex, foundParentElement);
                     break;
                 }

@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.ThreadLocalRandom;
 
+@SuppressWarnings("unused")
 public class Util {
     public static void showAlertModal(Alert.AlertType alertType, String text) {
         Stage stage = new Stage();

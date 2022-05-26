@@ -20,7 +20,7 @@
           style="-fx-padding: 5px;-fx-background-color: fx-primary;">
         <TextField HBox.hgrow="ALWAYS" promptText="Filter"/>
 
-        <Button styleClass="cursor-pointer" onAction="#create">
+        <Button styleClass="cursor-pointer" onAction="#onCreateButtonClick">
             <graphic>
                 <FontAwesomeIconView styleClass="white-fill" glyphName="PLUS"/>
             </graphic>
@@ -28,7 +28,7 @@
     </HBox>
 
     <!-- Saved Request here -->
-    <TreeView fx:id="savedRequests"
+    <TreeView fx:id="savedRequestsTreeView"
               minWidth="100"
               AnchorPane.topAnchor="35"
               AnchorPane.leftAnchor="0"

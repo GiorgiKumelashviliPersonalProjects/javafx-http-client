@@ -1,13 +1,11 @@
 package com.example.javafxhttpclient.core.fxml;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,6 +24,7 @@ public class AlertModalController implements Initializable {
         stage.close();
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         alertText.setWrappingWidth(MAX_WIDTH);
