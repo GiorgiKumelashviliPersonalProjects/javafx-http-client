@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.fxml;
+package com.example.javafxhttpclient.controllers.fragments;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

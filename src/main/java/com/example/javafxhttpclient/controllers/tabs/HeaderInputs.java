@@ -1,6 +1,6 @@
 package com.example.javafxhttpclient.controllers.tabs;
 
-import com.example.javafxhttpclient.core.fxml.HeaderInputsComponent;
+import com.example.javafxhttpclient.controllers.fragments.HeaderInputsComponent;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 

@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.fxml;
+package com.example.javafxhttpclient.controllers.fragments;
 
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import javafx.event.ActionEvent;

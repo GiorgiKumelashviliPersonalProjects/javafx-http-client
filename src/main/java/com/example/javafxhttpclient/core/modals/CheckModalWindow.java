@@ -1,6 +1,6 @@
 package com.example.javafxhttpclient.core.modals;
 
-import com.example.javafxhttpclient.core.fxml.CheckModalController;
+import com.example.javafxhttpclient.controllers.fragments.CheckModalController;
 import com.example.javafxhttpclient.core.utils.Constants;
 import com.example.javafxhttpclient.core.utils.FileManipulator;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.treeItems.fragments;
+package com.example.javafxhttpclient.core.misc.treeItems;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;

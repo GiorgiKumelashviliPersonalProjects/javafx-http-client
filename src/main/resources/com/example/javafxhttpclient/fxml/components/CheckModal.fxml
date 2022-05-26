@@ -9,7 +9,7 @@
             style="-fx-background-color: fx-primary"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.javafxhttpclient.core.fxml.CheckModalController">
+            fx:controller="com.example.javafxhttpclient.controllers.fragments.CheckModalController">
 
     <Text fx:id="checkText"
           AnchorPane.topAnchor="20"

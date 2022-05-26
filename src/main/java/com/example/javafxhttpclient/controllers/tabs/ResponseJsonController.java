@@ -1,8 +1,8 @@
 package com.example.javafxhttpclient.controllers.tabs;
 
-import com.example.javafxhttpclient.core.codearea.EditorArea;
-import com.example.javafxhttpclient.core.codearea.JSONFormatter;
-import com.example.javafxhttpclient.core.codearea.JSONHighlighter;
+import com.example.javafxhttpclient.core.misc.codearea.EditorArea;
+import com.example.javafxhttpclient.core.misc.codearea.JSONFormatter;
+import com.example.javafxhttpclient.core.misc.codearea.JSONHighlighter;
 import com.example.javafxhttpclient.core.utils.Constants;
 import com.example.javafxhttpclient.core.utils.FileManipulator;
 import javafx.fxml.FXML;

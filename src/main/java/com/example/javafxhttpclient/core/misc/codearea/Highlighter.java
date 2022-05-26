@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.codearea;
+package com.example.javafxhttpclient.core.misc.codearea;
 
 import org.fxmisc.richtext.model.StyleSpans;
 

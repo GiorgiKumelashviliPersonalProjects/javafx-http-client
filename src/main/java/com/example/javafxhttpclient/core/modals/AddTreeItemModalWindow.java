@@ -1,7 +1,7 @@
 package com.example.javafxhttpclient.core.modals;
 
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
-import com.example.javafxhttpclient.core.fxml.AddTreeItemModalController;
+import com.example.javafxhttpclient.controllers.fragments.AddTreeItemModalController;
 import com.example.javafxhttpclient.core.utils.Constants;
 import com.example.javafxhttpclient.core.utils.FileManipulator;
 import javafx.fxml.FXMLLoader;

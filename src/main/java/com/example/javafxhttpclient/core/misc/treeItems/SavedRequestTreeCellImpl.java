@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.treeItems.fragments;
+package com.example.javafxhttpclient.core.misc.treeItems;
 
 import com.example.javafxhttpclient.controllers.SidebarController;
 import javafx.scene.control.TreeCell;

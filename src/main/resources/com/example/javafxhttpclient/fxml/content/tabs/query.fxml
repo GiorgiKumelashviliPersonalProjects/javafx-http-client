@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import com.example.javafxhttpclient.core.fxml.HeaderInputsComponent?>
+<?import com.example.javafxhttpclient.controllers.fragments.HeaderInputsComponent?>
 
 <ScrollPane fx:controller="com.example.javafxhttpclient.controllers.tabs.QueryTabController"
             xmlns:fx="http://javafx.com/fxml/1"

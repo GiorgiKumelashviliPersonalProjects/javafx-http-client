@@ -1,4 +1,4 @@
-package com.example.javafxhttpclient.core.codearea;
+package com.example.javafxhttpclient.core.misc.codearea;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

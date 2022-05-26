@@ -158,9 +158,6 @@ public class ContentController implements Initializable {
                 return new Task<>() {
                     @Override
                     protected Response call() throws IOException, NoJsonResponseException {
-                        // sen request and handle response
-                        sendButton.setDisable(true);
-
                         Network network = new Network(url);
                         network.setRequestHeaders(headerData);
                         network.setRequestBody(jsonContent);
@@ -175,8 +172,7 @@ public class ContentController implements Initializable {
         backgroundThread.setOnSucceeded(event -> {
             Response response = (Response) event.getSource().getValue();
             handleResponse(response);
-
-            System.out.println("fetched" + Util.randInt(100));
+            // System.out.println("fetched" + Util.randInt(100));
         });
 
         backgroundThread.setOnCancelled(e -> {
@@ -185,9 +181,7 @@ public class ContentController implements Initializable {
 
             Util.showAlertModal(Alert.AlertType.ERROR, message);
             exception.printStackTrace();
-            sendButton.setDisable(false);
-
-            System.out.println("Error message: " + message);
+            // System.out.println("Error message: " + message);
         });
 
         backgroundThread.setOnFailed(e -> {
@@ -196,9 +190,7 @@ public class ContentController implements Initializable {
 
             Util.showAlertModal(Alert.AlertType.ERROR, message);
             exception.printStackTrace();
-            sendButton.setDisable(false);
-
-            System.out.println("Error message: " + message);
+            // System.out.println("Error message: " + message);
         });
 
         backgroundThread.restart();

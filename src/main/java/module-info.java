@@ -18,8 +18,7 @@ module com.example.javafxhttpclient {
     requires de.jensd.fx.glyphs.commons;
     requires annotations;
 
-    exports com.example.javafxhttpclient.core.codearea;
-    exports com.example.javafxhttpclient.core.treeItems;
+    exports com.example.javafxhttpclient.core.misc.codearea;
     exports com.example.javafxhttpclient.core.enums;
 
     exports com.example.javafxhttpclient.controllers;
@@ -28,11 +27,11 @@ module com.example.javafxhttpclient {
     exports com.example.javafxhttpclient;
     opens com.example.javafxhttpclient to javafx.fxml;
 
-    exports com.example.javafxhttpclient.core.fxml;
-    opens com.example.javafxhttpclient.core.fxml to javafx.fxml;
-
     exports com.example.javafxhttpclient.controllers.tabs;
     opens com.example.javafxhttpclient.controllers.tabs to javafx.fxml;
 
     exports com.example.javafxhttpclient.core.models.fxml;
+    exports com.example.javafxhttpclient.entities;
+    exports com.example.javafxhttpclient.controllers.fragments;
+    opens com.example.javafxhttpclient.controllers.fragments to javafx.fxml;
 }

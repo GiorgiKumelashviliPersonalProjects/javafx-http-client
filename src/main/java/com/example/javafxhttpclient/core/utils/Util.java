@@ -1,6 +1,6 @@
 package com.example.javafxhttpclient.core.utils;
 
-import com.example.javafxhttpclient.core.fxml.AlertModalController;
+import com.example.javafxhttpclient.controllers.fragments.AlertModalController;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;

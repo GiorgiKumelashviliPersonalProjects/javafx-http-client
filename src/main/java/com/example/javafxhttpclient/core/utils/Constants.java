@@ -1,8 +1,12 @@
 package com.example.javafxhttpclient.core.utils;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+
+import java.io.InputStream;
 
 public class Constants {
     public static String mainFXML = "/com/example/javafxhttpclient/main.fxml";
@@ -20,4 +24,14 @@ public class Constants {
     public static KeyCombination quitKeyCombination = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
     public static KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHIFT_DOWN);
     public static KeyCombination toggleFullScreenKeyCombination = new KeyCodeCombination(KeyCode.F11);
+
+    public static ImageView getFolderIconImage() {
+        InputStream imageStream = Constants.class.getResourceAsStream(savedRequestTreeItemFolderIcon);
+        assert imageStream != null;
+        ImageView folderImageIcon = new ImageView(new Image(imageStream));
+        folderImageIcon.setFitHeight(15);
+        folderImageIcon.setFitWidth(15);
+
+        return folderImageIcon;
+    }
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ScrollPane?>
-<?import com.example.javafxhttpclient.core.fxml.HeaderInputsComponent?>
+<?import com.example.javafxhttpclient.controllers.fragments.HeaderInputsComponent?>
 
 <?import javafx.scene.layout.Pane?>
 <ScrollPane fx:controller="com.example.javafxhttpclient.controllers.tabs.HeadersTabController"

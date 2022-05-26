@@ -1,5 +1,6 @@
 package com.example.javafxhttpclient.core.models.fxml;
 
+@SuppressWarnings("unused")
 public class ResponseTableModel {
     private String name;
     private String value;

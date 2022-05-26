@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="400.0"
             prefWidth="600.0"
             style="-fx-background-color: fx-primary"
-            fx:controller="com.example.javafxhttpclient.core.fxml.RenameTreeItemModalController"
+            fx:controller="com.example.javafxhttpclient.controllers.fragments.RenameTreeItemModalController"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/javafx/">
     <TextField fx:id="savedTreeItemTextField" layoutX="14.0" layoutY="36.0" promptText="new display name"/>
