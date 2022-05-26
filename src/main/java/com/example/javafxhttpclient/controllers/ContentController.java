@@ -85,6 +85,9 @@ public class ContentController implements Initializable {
     @FXML
     ResponseHeadersController responseHeadersController;
 
+    @FXML
+    SidebarController sidebarController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // grid layout for first column

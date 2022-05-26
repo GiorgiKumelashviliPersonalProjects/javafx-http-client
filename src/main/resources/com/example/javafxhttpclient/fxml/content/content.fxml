@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--suppress JavaFxUnresolvedFxIdReference -->
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.shape.Box?>
-<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="anchorPane"
             fx:controller="com.example.javafxhttpclient.controllers.ContentController"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -21,7 +20,7 @@
                AnchorPane.rightAnchor="0"
                AnchorPane.bottomAnchor="0">
         <!-- Sidebar controller injected here !!! -->
-        <fx:include source="sidebar.fxml"/>
+        <fx:include fx:id="sidebar" source="sidebar.fxml"/>
 
         <!-- Request tabs -->
         <AnchorPane>
