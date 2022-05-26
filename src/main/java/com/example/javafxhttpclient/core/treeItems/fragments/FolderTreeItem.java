@@ -4,7 +4,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 public class FolderTreeItem extends SavedRequestTreeItemAbstract {
-    public FolderTreeItem(String name) {
+    private final int id;
+
+    public FolderTreeItem(int id, String name) {
+        this.id = id;
         createItem = new MenuItem("Create Request");
         deleteItem = new MenuItem("Delete");
         renameItem = new MenuItem("Rename");
@@ -19,5 +22,9 @@ public class FolderTreeItem extends SavedRequestTreeItemAbstract {
 
         // add context menu and actions
         return contextMenu;
+    }
+
+    public int getId() {
+        return id;
     }
 }

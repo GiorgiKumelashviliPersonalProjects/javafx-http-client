@@ -18,21 +18,24 @@ import java.util.List;
 
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class SavedRequestTreeItem {
+    private final int id;
     private final SavedTreeItemType savedTreeItemType;
-    private final String name;
+    private String name;
     private SavedRequestTreeItemAbstract item;
 
     private final List<SavedRequestTreeItem> children = new ArrayList<>();
 
-    public SavedRequestTreeItem(SavedTreeItemType savedTreeItemType, String name) {
+    public SavedRequestTreeItem(int id, SavedTreeItemType savedTreeItemType, String name) {
+        this.id = id;
         this.savedTreeItemType = savedTreeItemType;
         this.name = name;
-        setItem();
+        setItem(id);
         setImage();
     }
 
-    public TreeItem<String> getItem() {
-        return item;
+    public void setName(String name) {
+        this.name = name;
+        this.item.setValue(name);
     }
 
     public void setChildren(SavedRequestTreeItem... params) {
@@ -57,25 +60,41 @@ public class SavedRequestTreeItem {
         }
     }
 
-    private void setItem() {
+    private void setItem(int id) {
         if (savedTreeItemType == SavedTreeItemType.REQUEST) {
-            item = new RequestTreeItem(name);
+            item = new RequestTreeItem(id, name);
         }
 
         if (savedTreeItemType == SavedTreeItemType.FOLDER) {
-            item = new FolderTreeItem(name);
+            item = new FolderTreeItem(id, name);
         }
     }
 
-    public SavedTreeItemType getSavedTreeItemType() {
-        return savedTreeItemType;
+    public int getId() {
+        return id;
     }
-
+    public TreeItem<String> getItem() {
+        return item;
+    }
     public String getName() {
         return name;
     }
-
+    public SavedTreeItemType getSavedTreeItemType() {
+        return savedTreeItemType;
+    }
     public List<SavedRequestTreeItem> getChildren() {
         return children;
+    }
+
+    public void setChildName(int id, String newName) {
+        for (SavedRequestTreeItem child: children) {
+            if (child.getId() == id) {
+                var foundIndex = children.indexOf(child);
+                var foundElement = children.get(foundIndex);
+                foundElement.setName(newName);
+                children.set(foundIndex, foundElement);
+                break;
+            }
+        }
     }
 }

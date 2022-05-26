@@ -1,6 +1,6 @@
 package com.example.javafxhttpclient.core.modals;
 
 @FunctionalInterface
-public interface AddTreeItemModalWindowCallback {
+public interface TreeItemModalWindowCallback {
     void onClose();
 }

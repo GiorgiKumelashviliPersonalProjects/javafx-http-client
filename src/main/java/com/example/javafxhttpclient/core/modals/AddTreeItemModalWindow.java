@@ -18,7 +18,7 @@ public class AddTreeItemModalWindow {
     public AddTreeItemModalWindow() {
     }
 
-    public void show(AddTreeItemModalWindowCallback callback) throws IOException {
+    public void show(TreeItemModalWindowCallback callback) throws IOException {
         Stage stage = new Stage();
         FXMLLoader modalFxml = FileManipulator.fxmlLoader(Constants.addSavedRequestTreeItem);
         String mainCss = FileManipulator.css(Constants.mainCss);
@@ -48,7 +48,7 @@ public class AddTreeItemModalWindow {
 
         addTreeItemModalScene.getStylesheets().add(mainCss);
         stage.setScene(addTreeItemModalScene);
-        stage.setTitle("My modal window");
+        stage.setTitle("Add tree item modal");
         stage.initModality(Modality.WINDOW_MODAL);
 
         // remove but don't know reason for this and commented, was causing some problems

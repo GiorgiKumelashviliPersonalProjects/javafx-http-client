@@ -47,42 +47,37 @@ public class SavedRequestTreeCellImpl extends TreeCell<String> {
                     treeItem.getMenu().show(getScene().getWindow(), e.getScreenX(), e.getScreenY());
                 }
 
-                // if double click (don't do it on root items which have single click event)
-                if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 && treeItem.getChildren().size() == 0) {
-                    renameAction(treeItem);
-                }
-
                 e.consume();
             });
         }
     }
-
-    private void renameAction(SavedRequestTreeItemAbstract treeItem) {
-        String beforeText = getItem();
-        TextField tempTextField = new TextField();
-
-        // remove label
-        setText(null);
-        tempTextField.setText(beforeText);
-
-        // on enter
-        tempTextField.setOnAction(ex -> {
-            setText(Util.isStringValid(tempTextField.getText()) ? tempTextField.getText() : beforeText);
-            setGraphic(treeItem.getGraphic());
-        });
-
-        // out of focus
-        tempTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                setText(Util.isStringValid(tempTextField.getText()) ? tempTextField.getText() : beforeText);
-                setGraphic(treeItem.getGraphic());
-            }
-        });
-
-        setGraphic(tempTextField);
-        tempTextField.requestFocus();
-        tempTextField.end();
-
-        System.out.println("double click");
-    }
 }
+
+//    private void renameAction(SavedRequestTreeItemAbstract treeItem) {
+//        String beforeText = getItem();
+//        TextField tempTextField = new TextField();
+//
+//        // remove label
+//        setText(null);
+//        tempTextField.setText(beforeText);
+//
+//        // on enter
+//        tempTextField.setOnAction(ex -> {
+//            setText(Util.isStringValid(tempTextField.getText()) ? tempTextField.getText() : beforeText);
+//            setGraphic(treeItem.getGraphic());
+//        });
+//
+//        // out of focus
+//        tempTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue) {
+//                setText(Util.isStringValid(tempTextField.getText()) ? tempTextField.getText() : beforeText);
+//                setGraphic(treeItem.getGraphic());
+//            }
+//        });
+//
+//        setGraphic(tempTextField);
+//        tempTextField.requestFocus();
+//        tempTextField.end();
+//
+//        System.out.println("double click");
+//    }

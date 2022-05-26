@@ -4,7 +4,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 public class RequestTreeItem extends SavedRequestTreeItemAbstract {
-    public RequestTreeItem(String name) {
+    private final int id;
+
+    public RequestTreeItem(int id, String name) {
+        this.id = id;
         deleteItem = new MenuItem("Delete");
         renameItem = new MenuItem("Rename");
 
@@ -18,5 +21,9 @@ public class RequestTreeItem extends SavedRequestTreeItemAbstract {
 
         // add context menu and actions
         return contextMenu;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -5,9 +5,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
@@ -16,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
     public static void showAlertModal(Alert.AlertType alertType, String text) {
@@ -108,5 +107,13 @@ public class Util {
 
     public static boolean isStringValid(String test) {
         return test != null && !test.isEmpty() && !test.isBlank();
+    }
+
+    public static int randInt(int max) {
+        return ThreadLocalRandom.current().nextInt(0, max + 1);
+    }
+
+    public static int randIntBetween(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

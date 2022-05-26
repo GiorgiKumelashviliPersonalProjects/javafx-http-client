@@ -16,4 +16,8 @@ abstract public class SavedRequestTreeItemAbstract extends TreeItem<String> {
 
     @Nullable
     public MenuItem renameItem;
+
+    public int id;
+
+    public abstract int getId();
 }
