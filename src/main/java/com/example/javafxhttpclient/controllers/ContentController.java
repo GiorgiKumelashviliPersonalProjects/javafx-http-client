@@ -6,13 +6,11 @@ import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
 import com.example.javafxhttpclient.core.utils.Util;
+import com.example.javafxhttpclient.exceptions.NoJsonResponseException;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,17 +20,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class ContentController implements Initializable {
+    private Service<Response> backgroundThread;
+
     private final String formatButtonIcon = FontAwesomeIcon.FILE_TEXT_ALT.name();
     private ContentTabs activeTab;
 
@@ -154,31 +152,56 @@ public class ContentController implements Initializable {
         Map<String, String> headerData = headersTabController.getNameAndValues();
         Map<String, String> queryData = queryTabController.getNameAndValues();
 
-        //        System.out.println(url);
-        //        System.out.println(method);
-        //        System.out.println(jsonContent);
-        //        System.out.println(headerData);
-        //        System.out.println(queryData);
+        backgroundThread = new Service<>() {
+            @Override
+            protected Task<Response> createTask() {
+                return new Task<>() {
+                    @Override
+                    protected Response call() throws IOException, NoJsonResponseException {
+                        // sen request and handle response
+                        sendButton.setDisable(true);
 
-        // sen request and handle response
-        Response response = null;
+                        Network network = new Network(url);
+                        network.setRequestHeaders(headerData);
+                        network.setRequestBody(jsonContent);
+                        network.setRequestQuery(queryData);
 
-        try {
-            Network network = new Network(url);
-            network.setRequestHeaders(headerData);
-            network.setRequestBody(jsonContent);
-            network.setRequestQuery(queryData);
-            response = network.send(method);
-        } catch (Exception e) {
-            Util.showAlertModal(Alert.AlertType.ERROR, e.getMessage());
-            e.printStackTrace();
-        }
+                        return network.send(method);
+                    }
+                };
+            }
+        };
 
-        if (response == null) {
-            return;
-        }
+        backgroundThread.setOnSucceeded(event -> {
+            Response response = (Response) event.getSource().getValue();
+            handleResponse(response);
 
-        handleResponse(response);
+            System.out.println("fetched" + Util.randInt(100));
+        });
+
+        backgroundThread.setOnCancelled(e -> {
+            Throwable exception = e.getSource().getException();
+            String message = exception.getMessage();
+
+            Util.showAlertModal(Alert.AlertType.ERROR, message);
+            exception.printStackTrace();
+            sendButton.setDisable(false);
+
+            System.out.println("Error message: " + message);
+        });
+
+        backgroundThread.setOnFailed(e -> {
+            Throwable exception = e.getSource().getException();
+            String message = exception.getMessage();
+
+            Util.showAlertModal(Alert.AlertType.ERROR, message);
+            exception.printStackTrace();
+            sendButton.setDisable(false);
+
+            System.out.println("Error message: " + message);
+        });
+
+        backgroundThread.restart();
     }
 
     public void formatJson() {

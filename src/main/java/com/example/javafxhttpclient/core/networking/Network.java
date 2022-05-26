@@ -67,8 +67,10 @@ public class Network {
                 httpMethod != HttpMethods.GET
         ) {
             httpURLConnection.setDoOutput(true);
-            try (OutputStream os = httpURLConnection.getOutputStream();
-                 OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            try (
+                    OutputStream os = httpURLConnection.getOutputStream();
+                    OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8)
+            ) {
                 osw.write(requestBody);
                 osw.flush();
                 os.flush();
