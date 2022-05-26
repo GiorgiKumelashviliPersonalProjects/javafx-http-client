@@ -7,7 +7,12 @@ import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
 import com.example.javafxhttpclient.core.utils.Util;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -17,10 +22,15 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class ContentController implements Initializable {
     private final String formatButtonIcon = FontAwesomeIcon.FILE_TEXT_ALT.name();
@@ -113,6 +123,11 @@ public class ContentController implements Initializable {
         //! Very important for setting positions of all split panes
         Platform.runLater(() -> {
             Stage stage = (Stage) splitPane.getScene().getWindow();
+
+            if (splitPane != null) {
+                splitPane.setDividerPositions(0.14f, 0.6f, 0.65f);
+            }
+
             stage.widthProperty().addListener((observableValue, oldValue, newValue) -> splitPane.setDividerPositions(0.14f, 0.6f, 0.65f));
         });
 
@@ -139,11 +154,11 @@ public class ContentController implements Initializable {
         Map<String, String> headerData = headersTabController.getNameAndValues();
         Map<String, String> queryData = queryTabController.getNameAndValues();
 
-//        System.out.println(url);
-//        System.out.println(method);
-//        System.out.println(jsonContent);
-//        System.out.println(headerData);
-//        System.out.println(queryData);
+        //        System.out.println(url);
+        //        System.out.println(method);
+        //        System.out.println(jsonContent);
+        //        System.out.println(headerData);
+        //        System.out.println(queryData);
 
         // sen request and handle response
         Response response = null;

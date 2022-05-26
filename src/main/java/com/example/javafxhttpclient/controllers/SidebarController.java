@@ -4,7 +4,6 @@ import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
 import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
-import com.example.javafxhttpclient.core.treeItems.FilteredSavedRequestTreeCellImpl;
 import com.example.javafxhttpclient.core.treeItems.SavedRequestTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.FolderTreeItem;
 import com.example.javafxhttpclient.core.treeItems.fragments.SavedRequestTreeCellImpl;
@@ -24,12 +23,13 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
 public class SidebarController implements Initializable {
+    public static SidebarController instance;
+
     @FXML
     public AnchorPane rootParent;
 
@@ -61,6 +61,10 @@ public class SidebarController implements Initializable {
         data.add(root3);
 
         addTreeItems(data);
+
+        if (instance == null) {
+            instance = this;
+        }
     }
 
     @Override
@@ -76,6 +80,8 @@ public class SidebarController implements Initializable {
     public void onCreateButtonClick(ActionEvent event) {
         // lose focus
         rootParent.requestFocus();
+        System.out.println("rootParent");
+        System.out.println(rootParent.isFocused());
         this.create(event);
     }
 
@@ -185,8 +191,7 @@ public class SidebarController implements Initializable {
     }
 
     private void addTreeItemToSpecificLevel(SavedRequestTreeItem item, boolean isTreeViewRootParentFocused) {
-        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
-        int id = selectedTreeItem.getId();
+        System.out.println(isTreeViewRootParentFocused);
 
         if (isTreeViewRootParentFocused) {
             // fxml
@@ -194,7 +199,15 @@ public class SidebarController implements Initializable {
 
             // add data
             rootTreeItems.add(item);
-        } else if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
+
+            return;
+        }
+
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView
+                .getSelectionModel()
+                .getSelectedItem();
+
+        if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
             if (item.getSavedTreeItemType() == SavedTreeItemType.FOLDER) {
                 Util.showAlertModal(Alert.AlertType.ERROR, "Allowed only request, cannot nest folders !");
                 return;
