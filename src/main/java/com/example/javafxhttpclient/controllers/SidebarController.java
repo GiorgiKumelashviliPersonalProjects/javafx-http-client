@@ -30,21 +30,21 @@ import java.util.ResourceBundle;
 public class SidebarController implements Initializable {
     public static SidebarController instance;
 
+    private final TreeItem<String> invisibleRootComponent;
+
+    public List<RequestEntity> rootTreeItems;
+
     @FXML
     public AnchorPane rootParent;
 
     @FXML
-    public TreeView<String> savedRequestsTreeView;
+    public TreeView<String> rootTreeView;
 
     @FXML
     public TextField filterTextField;
 
-    public TreeItem<String> invisibleRoot;
-
-    public List<RequestEntity> rootTreeItems;
-
     public SidebarController() {
-        invisibleRoot = new TreeItem<>(null);
+        invisibleRootComponent = new TreeItem<>(null);
 
         // temp
         RequestEntity root1 = new RequestEntity(1, SavedTreeItemType.FOLDER, "Simple api request");
@@ -60,7 +60,8 @@ public class SidebarController implements Initializable {
         data.add(root2);
         data.add(root3);
 
-        addTreeItems(data);
+        rootTreeItems = data;
+        invisibleRootComponent.getChildren().addAll(data.stream().map(RequestEntity::getFxmlComponent).toList());
 
         if (instance == null) {
             instance = this;
@@ -69,19 +70,19 @@ public class SidebarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        savedRequestsTreeView.setCellFactory(p -> new SavedRequestTreeCellImpl(this));
-        savedRequestsTreeView.setRoot(invisibleRoot);
-        savedRequestsTreeView.setShowRoot(false);
+        rootTreeView.setCellFactory(p -> new SavedRequestTreeCellImpl(this));
+        rootTreeView.setRoot(invisibleRootComponent);
+        rootTreeView.setShowRoot(false);
         debounceFilter();
     }
 
-    // methods
+    // |=====================================================
+    // | METHODS
+    // |=====================================================
 
     public void onCreateButtonClick(ActionEvent event) {
         // lose focus
         rootParent.requestFocus();
-        System.out.println("rootParent");
-        System.out.println(rootParent.isFocused());
         this.create(event);
     }
 
@@ -109,7 +110,7 @@ public class SidebarController implements Initializable {
     }
 
     public void rename(ActionEvent event) {
-        var selectedTreeItem = savedRequestsTreeView.getSelectionModel().getSelectedItem();
+        var selectedTreeItem = rootTreeView.getSelectionModel().getSelectedItem();
 
         try {
             RenameTreeItemModalWindow renameTreeItemModalWindow = new RenameTreeItemModalWindow();
@@ -146,56 +147,12 @@ public class SidebarController implements Initializable {
         }
     }
 
-    public void debounceFilter() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        filterTextField.textProperty().addListener((observable, oldValue, filterText) -> {
-            pause.setOnFinished(event -> {
-                if (filterText.isEmpty()) {
-                    invisibleRoot.getChildren().clear();
-                    invisibleRoot.getChildren().addAll(rootTreeItems.stream().map(RequestEntity::getFxmlComponent).toList());
-                    return;
-                }
-
-                List<RequestEntity> filteredItems = new ArrayList<>();
-
-                // filter ui here
-                for (var parent : rootTreeItems) {
-                    int childMatched = 0;
-                    RequestEntity tempParent = parent.cloneEmpty();
-                    tempParent.getFxmlComponent().setExpanded(true);
-
-                    // first check children
-                    for (var child : parent.getChildren()) {
-                        if (child.getName().contains(filterText)) {
-                            childMatched++;
-                            tempParent.getChildren().add(child);
-                            tempParent.setChildren(child);
-                        }
-                    }
-
-                    if (tempParent.getName().contains(filterText) || childMatched != 0) {
-                        filteredItems.add(tempParent);
-                    }
-                }
-
-                invisibleRoot.getChildren().clear();
-                invisibleRoot.getChildren().addAll(filteredItems.stream().map(RequestEntity::getFxmlComponent).toList());
-            });
-            pause.playFromStart();
-        });
-    }
-
-    private void addTreeItems(List<RequestEntity> data) {
-        rootTreeItems = data;
-        invisibleRoot.getChildren().addAll(data.stream().map(RequestEntity::getFxmlComponent).toList());
-    }
-
     private void addTreeItemToSpecificLevel(RequestEntity item, boolean isTreeViewRootParentFocused) {
         System.out.println(isTreeViewRootParentFocused);
 
         if (isTreeViewRootParentFocused) {
             // fxml
-            invisibleRoot.getChildren().addAll(item.getFxmlComponent());
+            invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());
 
             // add data
             rootTreeItems.add(item);
@@ -203,7 +160,7 @@ public class SidebarController implements Initializable {
             return;
         }
 
-        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView
                 .getSelectionModel()
                 .getSelectedItem();
 
@@ -225,7 +182,7 @@ public class SidebarController implements Initializable {
             }
         } else {
             // fxml
-            invisibleRoot.getChildren().addAll(item.getFxmlComponent());
+            invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());
 
             // add data
             rootTreeItems.add(item);
@@ -233,7 +190,7 @@ public class SidebarController implements Initializable {
     }
 
     private void renameTreeItemToSpecificLevel(String newName) {
-        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
 
         // set fxml
@@ -262,7 +219,7 @@ public class SidebarController implements Initializable {
     }
 
     private void deleteTreeItemToSpecificLevel() {
-        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) savedRequestsTreeView.getSelectionModel().getSelectedItem();
+        SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
 
         // fxml
@@ -285,5 +242,48 @@ public class SidebarController implements Initializable {
                 }
             }
         }
+    }
+
+    // |=====================================================
+    // | OTHER
+    // |=====================================================
+
+    private void debounceFilter() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        filterTextField.textProperty().addListener((observable, oldValue, filterText) -> {
+            pause.setOnFinished(event -> {
+                if (filterText.isEmpty()) {
+                    invisibleRootComponent.getChildren().clear();
+                    invisibleRootComponent.getChildren().addAll(rootTreeItems.stream().map(RequestEntity::getFxmlComponent).toList());
+                    return;
+                }
+
+                List<RequestEntity> filteredItems = new ArrayList<>();
+
+                // filter ui here
+                for (var parent : rootTreeItems) {
+                    int childMatched = 0;
+                    RequestEntity tempParent = parent.cloneEmpty();
+                    tempParent.getFxmlComponent().setExpanded(true);
+
+                    // first check children
+                    for (var child : parent.getChildren()) {
+                        if (child.getName().contains(filterText)) {
+                            childMatched++;
+                            tempParent.getChildren().add(child);
+                            tempParent.setChildren(child);
+                        }
+                    }
+
+                    if (tempParent.getName().contains(filterText) || childMatched != 0) {
+                        filteredItems.add(tempParent);
+                    }
+                }
+
+                invisibleRootComponent.getChildren().clear();
+                invisibleRootComponent.getChildren().addAll(filteredItems.stream().map(RequestEntity::getFxmlComponent).toList());
+            });
+            pause.playFromStart();
+        });
     }
 }

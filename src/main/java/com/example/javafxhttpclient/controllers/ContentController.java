@@ -7,7 +7,6 @@ import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
 import com.example.javafxhttpclient.core.utils.Util;
 import com.example.javafxhttpclient.exceptions.NoJsonResponseException;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -22,16 +21,11 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ContentController implements Initializable {
-    private Service<Response> backgroundThread;
-
-    private final String formatButtonIcon = FontAwesomeIcon.FILE_TEXT_ALT.name();
     private ContentTabs activeTab;
 
     @FXML
@@ -152,7 +146,7 @@ public class ContentController implements Initializable {
         Map<String, String> headerData = headersTabController.getNameAndValues();
         Map<String, String> queryData = queryTabController.getNameAndValues();
 
-        backgroundThread = new Service<>() {
+        Service<Response> backgroundThread = new Service<>() {
             @Override
             protected Task<Response> createTask() {
                 return new Task<>() {
@@ -200,29 +194,30 @@ public class ContentController implements Initializable {
         jsonTabController.formatJson();
     }
 
-    public String getFormatButtonIcon() {
-        return formatButtonIcon;
-    }
-
     private void handleResponse(Response response) {
         if (response != null) {
-            responseJsonController.setJsonContent(response.getData());
+            String statusCodeText = response.getStatusCode() + " " + Util.getStatusCodeText(response.getStatusCode());
+            String responseTimeText = response.getResponseTime() + " ms";
+            String responseStatusCodeLabelStyle;
 
-            responseHeadersController.setResponseHeaders(response.getHeaders());
 
             if (response.getStatusCode() <= 299) {
-                responseStatusCodeLabel.setStyle("-fx-background-color: #2d8a48");
+                responseStatusCodeLabelStyle = "-fx-background-color: #2d8a48";
             } else if (response.getStatusCode() <= 399) {
-                responseStatusCodeLabel.setStyle("-fx-background-color: #8a8f33");
+                responseStatusCodeLabelStyle = "-fx-background-color: #8a8f33";
             } else {
-                responseStatusCodeLabel.setStyle("-fx-background-color: #8f3333");
+                responseStatusCodeLabelStyle = "-fx-background-color: #8f3333";
             }
 
-            responseStatusCodeLabel.setText(
-                    response.getStatusCode() + " " + Util.getStatusCodeText(response.getStatusCode())
-            );
-            responseTimeLabel.setText(response.getResponseTime() + " ms");
-            System.out.println("end of line");
+            // set all response stuff
+            responseStatusCodeLabel.setStyle(responseStatusCodeLabelStyle);
+            responseJsonController.setJsonContent(response.getData());
+            responseHeadersController.setResponseHeaders(response.getHeaders());
+            responseStatusCodeLabel.setText(statusCodeText);
+            responseTimeLabel.setText(responseTimeText);
+
+            // response done
+            System.out.printf("response completed in %s%n", responseTimeText);
         }
     }
 }

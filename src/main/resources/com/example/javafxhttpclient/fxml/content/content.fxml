@@ -76,7 +76,7 @@
                     AnchorPane.rightAnchor="10"
                     AnchorPane.topAnchor="80">
                 <graphic>
-                    <FontAwesomeIconView styleClass="white-fill" glyphName="${controller.formatButtonIcon}"/>
+                    <FontAwesomeIconView styleClass="white-fill" glyphName="FILE_TEXT_ALT"/>
                 </graphic>
 
                 Format

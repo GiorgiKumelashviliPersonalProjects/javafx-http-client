@@ -31,7 +31,7 @@
     </HBox>
 
     <!-- Saved Request here -->
-    <TreeView fx:id="savedRequestsTreeView"
+    <TreeView fx:id="rootTreeView"
               minWidth="100"
               AnchorPane.topAnchor="35"
               AnchorPane.leftAnchor="0"
