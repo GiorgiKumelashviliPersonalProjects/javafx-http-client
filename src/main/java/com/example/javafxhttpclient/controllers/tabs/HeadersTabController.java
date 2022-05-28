@@ -13,7 +13,7 @@ import java.util.Map;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class HeadersTabController implements HeaderInputs {
     @FXML
-    VBox tabContent;
+    public VBox tabContent;
 
     public void onAddButtonClick(ActionEvent event) {
         HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
@@ -45,4 +45,22 @@ public class HeadersTabController implements HeaderInputs {
 
         return headers;
     }
+
+    public void setHeaderData(Map<String, String> headerData) {
+        tabContent.getChildren().clear();
+
+        headerData.forEach((k, v) -> {
+            HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
+            headerInputsComponent.nameTextField.setText(k);
+            headerInputsComponent.valueTextField.setText(v);
+            tabContent.getChildren().add(headerInputsComponent);
+        });
+    }
+
+    public void clearHeaders() {
+        tabContent.getChildren().clear();
+        HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
+        tabContent.getChildren().add(headerInputsComponent);
+    }
+
 }

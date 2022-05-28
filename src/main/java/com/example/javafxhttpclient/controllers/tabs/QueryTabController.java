@@ -46,4 +46,21 @@ public class QueryTabController implements HeaderInputs {
 
         return headers;
     }
+
+    public void setQueryData(Map<String, String> queryData) {
+        queryTabContent.getChildren().clear();
+
+        queryData.forEach((k, v) -> {
+            HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
+            headerInputsComponent.nameTextField.setText(k);
+            headerInputsComponent.valueTextField.setText(v);
+            queryTabContent.getChildren().add(headerInputsComponent);
+        });
+    }
+
+    public void clearQueries() {
+        queryTabContent.getChildren().clear();
+        HeaderInputsComponent headerInputsComponent = new HeaderInputsComponent();
+        queryTabContent.getChildren().add(headerInputsComponent);
+    }
 }

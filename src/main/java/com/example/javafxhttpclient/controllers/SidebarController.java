@@ -1,9 +1,11 @@
 package com.example.javafxhttpclient.controllers;
 
+import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
 import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
+import com.example.javafxhttpclient.entities.RequestDataEntity;
 import com.example.javafxhttpclient.entities.RequestEntity;
 import com.example.javafxhttpclient.core.misc.treeItems.FolderTreeItem;
 import com.example.javafxhttpclient.core.misc.treeItems.SavedRequestTreeCellImpl;
@@ -19,6 +21,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,23 +48,6 @@ public class SidebarController implements Initializable {
 
     public SidebarController() {
         invisibleRootComponent = new TreeItem<>(null);
-
-        // temp
-        RequestEntity root1 = new RequestEntity(1, SavedTreeItemType.FOLDER, "Simple api request");
-        RequestEntity model11 = new RequestEntity(2, SavedTreeItemType.REQUEST, "Json test 1");
-        RequestEntity model12 = new RequestEntity(3, SavedTreeItemType.REQUEST, "Json test 2");
-        root1.setChildren(model11, model12);
-
-        RequestEntity root2 = new RequestEntity(4, SavedTreeItemType.FOLDER, "Some folder");
-        RequestEntity root3 = new RequestEntity(5, SavedTreeItemType.REQUEST, "testing");
-
-        List<RequestEntity> data = new ArrayList<>();
-        data.add(root1);
-        data.add(root2);
-        data.add(root3);
-
-        rootTreeItems = data;
-        invisibleRootComponent.getChildren().addAll(data.stream().map(RequestEntity::getFxmlComponent).toList());
 
         if (instance == null) {
             instance = this;
@@ -99,6 +85,8 @@ public class SidebarController implements Initializable {
                 if (newType != null && Util.isStringValid(newName)) {
                     int randomId = Util.randInt(1000);
                     RequestEntity newRootItem = new RequestEntity(randomId, newType, newName);
+                    RequestDataEntity newRequestDataEntity = new RequestDataEntity("", HttpMethods.GET);
+                    newRootItem.setRequestDataEntity(newRequestDataEntity);
                     addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
                 }
             });
@@ -285,5 +273,22 @@ public class SidebarController implements Initializable {
             });
             pause.playFromStart();
         });
+    }
+
+    public void initializeEntities(List<RequestEntity> requestEntities) {
+        rootTreeItems = requestEntities;
+        invisibleRootComponent.getChildren().addAll(requestEntities.stream().map(RequestEntity::getFxmlComponent).toList());
+    }
+
+    @Nullable
+    public RequestEntity findItem(int id) {
+        for (RequestEntity parent : rootTreeItems) {
+            if (parent.getId() == id) return parent;
+
+            for (RequestEntity child : parent.getChildren())
+                if (child.getId() == id) return child;
+        }
+
+        return null;
     }
 }

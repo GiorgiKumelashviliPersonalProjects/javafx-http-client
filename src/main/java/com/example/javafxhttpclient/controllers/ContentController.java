@@ -3,10 +3,14 @@ package com.example.javafxhttpclient.controllers;
 import com.example.javafxhttpclient.controllers.tabs.*;
 import com.example.javafxhttpclient.core.enums.ContentTabs;
 import com.example.javafxhttpclient.core.enums.HttpMethods;
+import com.example.javafxhttpclient.core.misc.treeItems.SavedRequestTreeItemAbstract;
 import com.example.javafxhttpclient.core.networking.Network;
 import com.example.javafxhttpclient.core.networking.Response;
 import com.example.javafxhttpclient.core.utils.Util;
+import com.example.javafxhttpclient.entities.RequestDataEntity;
+import com.example.javafxhttpclient.entities.RequestEntity;
 import com.example.javafxhttpclient.exceptions.NoJsonResponseException;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -19,14 +23,19 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.reactfx.util.FxTimer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ContentController implements Initializable {
     private ContentTabs activeTab;
+
+    private int activeId;
 
     @FXML
     public AnchorPane anchorPane;
@@ -127,6 +136,14 @@ public class ContentController implements Initializable {
         });
 
         responseTabGridPane.setPadding(new Insets(5));
+
+        initializeRequestDataEntities();
+
+        // Set listeners
+        onUrlChange();
+        onMethodChange();
+        onJsonChange();
+         onHeadersAndQueryChange();
     }
 
     public void onSendButtonClick() {
@@ -168,8 +185,30 @@ public class ContentController implements Initializable {
 
         backgroundThread.setOnSucceeded(event -> {
             Response response = (Response) event.getSource().getValue();
-            handleResponse(response);
-            // System.out.println("fetched" + Util.randInt(100));
+            if (response != null) {
+                String statusCodeText = response.getStatusCode() + " " + Util.getStatusCodeText(response.getStatusCode());
+                String responseTimeText = response.getResponseTime() + " ms";
+                String responseStatusCodeLabelStyle;
+
+
+                if (response.getStatusCode() <= 299) {
+                    responseStatusCodeLabelStyle = "-fx-background-color: #2d8a48";
+                } else if (response.getStatusCode() <= 399) {
+                    responseStatusCodeLabelStyle = "-fx-background-color: #8a8f33";
+                } else {
+                    responseStatusCodeLabelStyle = "-fx-background-color: #8f3333";
+                }
+
+                // set all response stuff
+                responseStatusCodeLabel.setStyle(responseStatusCodeLabelStyle);
+                responseJsonController.setJsonContent(response.getData());
+                responseHeadersController.setResponseHeaders(response.getHeaders());
+                responseStatusCodeLabel.setText(statusCodeText);
+                responseTimeLabel.setText(responseTimeText);
+
+                // response done
+                System.out.printf("response completed in %s%n", responseTimeText);
+            }
         });
 
         backgroundThread.setOnCancelled(e -> {
@@ -197,30 +236,119 @@ public class ContentController implements Initializable {
         jsonTabController.formatJson();
     }
 
-    private void handleResponse(Response response) {
-        if (response != null) {
-            String statusCodeText = response.getStatusCode() + " " + Util.getStatusCodeText(response.getStatusCode());
-            String responseTimeText = response.getResponseTime() + " ms";
-            String responseStatusCodeLabelStyle;
+    public void initializeRequestDataEntities() {
+        sidebarController.rootTreeView.setOnMousePressed(e -> {
+            if (e.getClickCount() == 2) {
+                SavedRequestTreeItemAbstract item = (SavedRequestTreeItemAbstract) sidebarController
+                        .rootTreeView
+                        .getSelectionModel()
+                        .getSelectedItem();
 
+                activeId = item.getId();
+                RequestEntity foundRequest = sidebarController.findItem(activeId);
+                RequestDataEntity requestDataEntity = foundRequest != null ? foundRequest.getRequestDataEntity() : null;
 
-            if (response.getStatusCode() <= 299) {
-                responseStatusCodeLabelStyle = "-fx-background-color: #2d8a48";
-            } else if (response.getStatusCode() <= 399) {
-                responseStatusCodeLabelStyle = "-fx-background-color: #8a8f33";
-            } else {
-                responseStatusCodeLabelStyle = "-fx-background-color: #8f3333";
+                if (requestDataEntity == null) {
+                    // clear everything on ui and state
+                    urlTextField.setText("");
+                    httpMethodsCombobox.setValue(String.valueOf(HttpMethods.GET));
+                    jsonTabController.clearJsonContent();
+                    headersTabController.clearHeaders();
+                    queryTabController.clearQueries();
+                    return;
+                }
+
+                urlTextField.setText(requestDataEntity.getUrl());
+                httpMethodsCombobox.setValue(String.valueOf(requestDataEntity.getMethod()));
+
+                if (requestDataEntity.getJsonContent() != null) {
+                    jsonTabController.setJsonContent(requestDataEntity.getJsonContent());
+                } else {
+                    jsonTabController.clearJsonContent();
+                }
+
+                if (requestDataEntity.getHeaderData() != null && requestDataEntity.getHeaderData().size() > 0) {
+                    headersTabController.setHeaderData(requestDataEntity.getHeaderData());
+                } else {
+                    headersTabController.clearHeaders();
+                }
+
+                if (requestDataEntity.getQueryData() != null && requestDataEntity.getQueryData().size() > 0) {
+                    queryTabController.setQueryData(requestDataEntity.getQueryData());
+                } else {
+                    queryTabController.clearQueries();
+                }
             }
+        });
+    }
 
-            // set all response stuff
-            responseStatusCodeLabel.setStyle(responseStatusCodeLabelStyle);
-            responseJsonController.setJsonContent(response.getData());
-            responseHeadersController.setResponseHeaders(response.getHeaders());
-            responseStatusCodeLabel.setText(statusCodeText);
-            responseTimeLabel.setText(responseTimeText);
+    // |=====================================================
+    // | DETECT CHANGES
+    // |=====================================================
 
-            // response done
-            System.out.printf("response completed in %s%n", responseTimeText);
-        }
+    public void onUrlChange() {
+        // debounce for one second of url change
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        urlTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            pause.setOnFinished(event -> {
+                RequestEntity dataEntity = sidebarController.findItem(activeId);
+
+                if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
+                    System.out.println(dataEntity.getRequestDataEntity());
+                    System.out.println(newValue);
+                    Objects.requireNonNull(dataEntity.getRequestDataEntity()).setUrl(newValue);
+                }
+            });
+            pause.playFromStart();
+        });
+    }
+
+    public void onMethodChange() {
+        httpMethodsCombobox
+                .getSelectionModel()
+                .selectedItemProperty()
+                .addListener((observable1, oldValue1, newValue) -> {
+                    RequestEntity dataEntity = sidebarController.findItem(activeId);
+
+                    if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
+                        dataEntity.getRequestDataEntity().setMethod(HttpMethods.valueOf(newValue));
+                    }
+                });
+    }
+
+    public void onJsonChange() {
+        // debounce for one second of url change
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        jsonTabController
+                .getCodeArea()
+                .textProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    pause.setOnFinished(event -> {
+                        if (!Util.isJsonValid(newValue)) {
+                            return;
+                        }
+
+                        RequestEntity dataEntity = sidebarController.findItem(activeId);
+
+                        if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
+                            dataEntity.getRequestDataEntity().setJsonContent(newValue);
+                        }
+                    });
+                    pause.playFromStart();
+                });
+    }
+
+    /**
+     * @important Resource intensive method
+     */
+    public void onHeadersAndQueryChange() {
+        FxTimer.createPeriodic(java.time.Duration.ofSeconds(2), () -> {
+            RequestEntity dataEntity = sidebarController.findItem(activeId);
+
+            if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
+                dataEntity.getRequestDataEntity().setHeaderData(headersTabController.getNameAndValues());
+                dataEntity.getRequestDataEntity().setQueryData(queryTabController.getNameAndValues());
+            }
+        }).restart();
     }
 }

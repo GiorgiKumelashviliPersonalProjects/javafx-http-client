@@ -33,7 +33,7 @@
                 <ComboBox fx:id="httpMethodsCombobox"
                           GridPane.columnIndex="0"
                           prefHeight="35.0"
-                          prefWidth="100.0"/>
+                          prefWidth="110.0"/>
 
                 <TextField fx:id="urlTextField"
                            GridPane.fillWidth="true"

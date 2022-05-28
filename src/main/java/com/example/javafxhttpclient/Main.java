@@ -10,10 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * TODO -> load different requests
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
- * TODO -> have http send on different thread
- *
+ * 
  * TODO -> menubar items (save, about)
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json

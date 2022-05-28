@@ -7,6 +7,7 @@ import com.example.javafxhttpclient.core.misc.treeItems.SavedRequestTreeItemAbst
 import com.example.javafxhttpclient.core.utils.Constants;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ public class RequestEntity {
 
     private String name;
 
+    @Nullable
     private RequestDataEntity requestDataEntity;
 
     private SavedRequestTreeItemAbstract fxmlComponent;
@@ -128,6 +130,7 @@ public class RequestEntity {
         return name;
     }
 
+    @Nullable
     public RequestDataEntity getRequestDataEntity() {
         return requestDataEntity;
     }

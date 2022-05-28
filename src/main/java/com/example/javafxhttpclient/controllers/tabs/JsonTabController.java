@@ -50,7 +50,10 @@ public class JsonTabController implements Initializable {
     }
 
     public void formatJson() {
-
         rawInputArea.setText(getJsonContent(), new JSONFormatter(), new JSONHighlighter());
+    }
+
+    public void clearJsonContent() {
+        getCodeArea().setText("{ }", new JSONFormatter(), new JSONHighlighter());
     }
 }
