@@ -40,6 +40,10 @@ public class FileManipulator {
         return Objects.requireNonNull(getInstance().getClass().getResource(pathname)).toExternalForm();
     }
 
+    public static URL resource(String pathname) {
+        return getInstance().getClass().getResource(pathname);
+    }
+
     public static FXMLLoader fxmlLoader(String pathname) {
         return new FXMLLoader(getInstance().getClass().getResource(pathname));
     }

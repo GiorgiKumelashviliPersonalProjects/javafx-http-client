@@ -12,6 +12,9 @@ module com.example.javafxhttpclient {
     requires com.fasterxml.jackson.core;
     requires org.json;
 
+    requires java.sql;
+    requires org.xerial.sqlitejdbc;
+
     requires event.bus;
 
     requires de.jensd.fx.glyphs.fontawesome;
