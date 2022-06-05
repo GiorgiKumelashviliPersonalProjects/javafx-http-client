@@ -341,12 +341,15 @@ public class ContentController implements Initializable {
 
     public void onJsonChange() {
         // debounce for one second of url change
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        PauseTransition pause = new PauseTransition(Duration.millis(500));
         jsonTabController
                 .getCodeArea()
                 .textProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     pause.setOnFinished(event -> {
+                        System.out.println(123);
+                        System.out.println(newValue);
+
                         if (!Util.isJsonValid(newValue)) {
                             return;
                         }
@@ -355,6 +358,16 @@ public class ContentController implements Initializable {
 
                         if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
                             dataEntity.getRequestDataEntity().setJsonContent(newValue);
+
+                            try {
+                                RequestDataEntity.updateColumn(
+                                        dataEntity.getRequestDataEntity().getId(),
+                                        RequestDataEntity.JSON_COLUMN_NAME,
+                                        newValue
+                                );
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
                     pause.playFromStart();

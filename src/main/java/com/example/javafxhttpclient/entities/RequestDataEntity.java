@@ -133,10 +133,12 @@ public class RequestDataEntity {
                 // nullables
                 String jsonContent = requestDataEntitiesData.getString(RequestDataEntity.JSON_COLUMN_NAME);
 
-                if (jsonContent != null && !jsonContent.isEmpty()) {
-                    jsonContent = Util.deserializeJson(jsonContent);
-                    System.out.println(jsonContent);
-                }
+                System.out.println(jsonContent);
+
+//                if (jsonContent != null && !jsonContent.isEmpty()) {
+//                    jsonContent = Util.deserializeJson(jsonContent);
+//                    System.out.println(jsonContent);
+//                }
 
                 Map<String, String> headerData = new HashMap<>();
                 Map<String, String> queryData = new HashMap<>();
