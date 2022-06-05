@@ -29,6 +29,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
@@ -169,10 +170,10 @@ public class SidebarController implements Initializable {
         // JAVAFX (UI update)
         if (isTreeViewRootParentFocused) {
             // fxml
-            invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());
+            invisibleRootComponent.getChildren().addAll(Objects.requireNonNull(newRootItem).getFxmlComponent());
 
             // add data
-            rootTreeItems.add(item);
+            rootTreeItems.add(newRootItem);
 
             return;
         }
@@ -182,27 +183,27 @@ public class SidebarController implements Initializable {
                 .getSelectedItem();
 
         if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
-            if (item.getType() == SavedTreeItemType.FOLDER) {
+            if (Objects.requireNonNull(newRootItem).getType() == SavedTreeItemType.FOLDER) {
                 Util.showAlertModal(Alert.AlertType.ERROR, "Allowed only request, cannot nest folders !");
                 return;
             }
 
-            // fxml ( allowed here only if selected is folder and item type is request )
-            selectedTreeItem.getChildren().add(item.getFxmlComponent());
+            // fxml ( allowed here only if selected is folder and newRootItem type is request )
+            selectedTreeItem.getChildren().add(newRootItem.getFxmlComponent());
 
-            // add data to children of already existing item in root
+            // add data to children of already existing newRootItem in root
             for (RequestEntity parent : rootTreeItems) {
                 if (parent.getId() == selectedTreeItem.getId()) {
-                    parent.getChildren().add(item);
+                    parent.getChildren().add(newRootItem);
                     break;
                 }
             }
         } else {
             // fxml
-            invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());
+            invisibleRootComponent.getChildren().addAll(Objects.requireNonNull(newRootItem).getFxmlComponent());
 
             // add data
-            rootTreeItems.add(item);
+            rootTreeItems.add(newRootItem);
         }
     }
 
@@ -238,6 +239,11 @@ public class SidebarController implements Initializable {
     private void deleteTreeItemToSpecificLevel() {
         SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
+
+
+        // check if folder and has children
+        // else just delete it
+
 
         // fxml
         selectedTreeItem.getParent().getChildren().remove(selectedTreeItem);

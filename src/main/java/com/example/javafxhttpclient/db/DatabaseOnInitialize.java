@@ -28,6 +28,7 @@ public class DatabaseOnInitialize {
                       CONSTRAINT fk_column
                           FOREIGN KEY (%s)
                           REFERENCES request_entity (%s)
+                          ON DELETE CASCADE
                     );
                     
                     CREATE TABLE IF NOT EXISTS [main].request_entity_data (
