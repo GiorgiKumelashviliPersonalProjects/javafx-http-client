@@ -28,6 +28,7 @@ import org.reactfx.util.FxTimer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -143,7 +144,7 @@ public class ContentController implements Initializable {
         onUrlChange();
         onMethodChange();
         onJsonChange();
-         onHeadersAndQueryChange();
+        onHeadersAndQueryChange();
     }
 
     public void onSendButtonClick() {
@@ -294,9 +295,13 @@ public class ContentController implements Initializable {
                 RequestEntity dataEntity = sidebarController.findItem(activeId);
 
                 if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
-                    System.out.println(dataEntity.getRequestDataEntity());
-                    System.out.println(newValue);
                     Objects.requireNonNull(dataEntity.getRequestDataEntity()).setUrl(newValue);
+
+                    try {
+                        RequestDataEntity.updateColumnUrl(dataEntity.getRequestDataEntity().getId(), newValue);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
             pause.playFromStart();
@@ -312,6 +317,19 @@ public class ContentController implements Initializable {
 
                     if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
                         dataEntity.getRequestDataEntity().setMethod(HttpMethods.valueOf(newValue));
+                        try {
+                            System.out.println(dataEntity.getRequestDataEntity().getId());
+                            System.out.println(newValue);
+                            System.out.println(HttpMethods.valueOf(newValue));
+
+
+                            RequestDataEntity.updateColumnMethod(
+                                    dataEntity.getRequestDataEntity().getId(),
+                                    HttpMethods.valueOf(newValue)
+                            );
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
     }

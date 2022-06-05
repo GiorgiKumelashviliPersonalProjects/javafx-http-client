@@ -80,6 +80,9 @@ public class RequestDataEntity {
     // | GETTERS
     // |=====================================================
 
+    public int getId() {
+        return id;
+    }
 
     public int getRequestEntityId() {
         return requestEntityId;
@@ -208,5 +211,27 @@ public class RequestDataEntity {
         }
 
         return null;
+    }
+
+    public static void updateColumnUrl(int id, String newUrl) throws SQLException {
+        String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?"
+                .formatted(RequestDataEntity.TABLE_NAME, RequestDataEntity.URL_COLUMN_NAME, RequestDataEntity.ID_COLUMN_NAME);
+
+        DatabaseConnection.executeCallbackPrepared(updateQuery, stmt -> {
+            stmt.setString(1, newUrl);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        });
+    }
+
+    public static void updateColumnMethod(int id, HttpMethods newMethod) throws SQLException {
+        String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?"
+                .formatted(RequestDataEntity.TABLE_NAME, RequestDataEntity.METHOD_COLUMN_NAME, RequestDataEntity.ID_COLUMN_NAME);
+
+        DatabaseConnection.executeCallbackPrepared(updateQuery, stmt -> {
+            stmt.setString(1, String.valueOf(newMethod));
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        });
     }
 }

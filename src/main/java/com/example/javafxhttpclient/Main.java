@@ -13,14 +13,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * TODO -> files: create, rename, delete
  * TODO -> request data: method, url, json, headers, query
- *
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
- * FIXME -> src/main/java/com/example/javafxhttpclient/controllers/ContentController.java
  *
- * <p>
- * TODO -> menu bar items (save, about)
+ * TODO -> menu bar about
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
  * TODO -> ask before quit (Are you sure you ant to quit)
