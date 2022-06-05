@@ -63,7 +63,6 @@ public class RequestEntity {
         }
     }
 
-
     // |=====================================================
     // | METHODS
     // |=====================================================
@@ -238,5 +237,14 @@ public class RequestEntity {
         }
 
         return null;
+    }
+
+    public static void deleteByIdDb(int id) throws SQLException {
+        String deleteQuery = "DELETE FROM %s WHERE %s = ?".formatted(RequestEntity.TABLE_NAME, RequestEntity.ID_COLUMN_NAME);
+
+        DatabaseConnection.executeCallbackPrepared(deleteQuery, stmt -> {
+            stmt.setString(1, String.valueOf(id));
+            stmt.executeUpdate();
+        });
     }
 }

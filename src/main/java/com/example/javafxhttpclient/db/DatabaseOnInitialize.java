@@ -43,6 +43,7 @@ public class DatabaseOnInitialize {
                       CONSTRAINT fk_column
                           FOREIGN KEY (%s)
                           REFERENCES request_entity (%s)
+                          ON DELETE CASCADE
                     );
                     """
                     .formatted(

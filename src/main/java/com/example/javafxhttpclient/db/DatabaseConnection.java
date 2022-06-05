@@ -7,6 +7,7 @@ import com.example.javafxhttpclient.core.utils.GeneralCallablePrepared;
 import com.example.javafxhttpclient.entities.RequestDataEntity;
 import com.example.javafxhttpclient.entities.RequestEntity;
 import com.example.javafxhttpclient.exceptions.DatabaseNotFoundException;
+import org.sqlite.SQLiteConfig;
 
 import java.net.URL;
 import java.sql.*;
@@ -22,7 +23,10 @@ public class DatabaseConnection {
 
         String url = "jdbc:sqlite:".concat(mainDbPath.getPath());
 
-        return DriverManager.getConnection(url);
+        SQLiteConfig config = new SQLiteConfig();
+        config.enforceForeignKeys(true);
+
+        return DriverManager.getConnection(url, config.toProperties());
     }
 
     public static ResultSet executeSelect(String query) throws SQLException {

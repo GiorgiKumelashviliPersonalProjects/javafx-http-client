@@ -2,7 +2,6 @@ package com.example.javafxhttpclient.controllers;
 
 import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
-import com.example.javafxhttpclient.core.misc.treeItems.RequestTreeItem;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
 import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
@@ -128,7 +127,11 @@ public class SidebarController implements Initializable {
             checkModalWindow.show(() -> {
                 if (checkModalWindow.isAnswerYes()) {
                     // delete
-                    deleteTreeItemToSpecificLevel();
+                    try {
+                        deleteTreeItemToSpecificLevel();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         } catch (IOException e) {
@@ -236,14 +239,12 @@ public class SidebarController implements Initializable {
         }
     }
 
-    private void deleteTreeItemToSpecificLevel() {
+    private void deleteTreeItemToSpecificLevel() throws SQLException {
         SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
 
-
-        // check if folder and has children
-        // else just delete it
-
+        // SQL
+        RequestEntity.deleteByIdDb(id);
 
         // fxml
         selectedTreeItem.getParent().getChildren().remove(selectedTreeItem);
