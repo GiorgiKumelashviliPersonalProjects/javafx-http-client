@@ -85,32 +85,8 @@ public class SidebarController implements Initializable {
                 SavedTreeItemType newType = addTreeItemModalWindow.getType();
 
                 if (newType != null && Util.isStringValid(newName)) {
-                    //FIXME problem here
-                    //====================================================
                     try {
-                        Integer parentId = null;
-
-                        if (!isTreeViewRootParentFocused) {
-                            // edge case where request is created inside folder, and we need parent id
-                            SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView
-                                    .getSelectionModel()
-                                    .getSelectedItem();
-
-                            if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
-                                // this means its inside folder
-                                parentId = selectedTreeItem.getId();
-                            }
-                        }
-
-                        RequestEntity newRootItem = RequestEntity.insertNewEntityInDb(newType, newName, parentId, true);
-
-                        if (newType == SavedTreeItemType.REQUEST) {
-                            RequestDataEntity newRequestDataEntity = RequestDataEntity
-                                    .insertNewEntityInDb(newRootItem.getId(), "", HttpMethods.GET, true);
-                            newRootItem.setRequestDataEntity(newRequestDataEntity);
-                        }
-
-                        addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
+                        addTreeItemToSpecificLevel(isTreeViewRootParentFocused, newName, newType);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -161,7 +137,36 @@ public class SidebarController implements Initializable {
         }
     }
 
-    private void addTreeItemToSpecificLevel(RequestEntity item, boolean isTreeViewRootParentFocused) {
+    private void addTreeItemToSpecificLevel(
+            boolean isTreeViewRootParentFocused,
+            String newName,
+            SavedTreeItemType newType
+    ) throws SQLException {
+        // SQL
+        Integer parentId = null;
+
+        if (!isTreeViewRootParentFocused) {
+            // edge case where request is created inside folder, and we need parent id
+            SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView
+                    .getSelectionModel()
+                    .getSelectedItem();
+
+            if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
+                // this means its inside folder
+                parentId = selectedTreeItem.getId();
+            }
+        }
+
+        RequestEntity newRootItem = RequestEntity.insertNewEntityInDb(newType, newName, parentId, true);
+
+        if (newType == SavedTreeItemType.REQUEST) {
+            RequestDataEntity newRequestDataEntity = RequestDataEntity
+                    .insertNewEntityInDb(newRootItem.getId(), "", HttpMethods.GET, true);
+            newRootItem.setRequestDataEntity(newRequestDataEntity);
+        }
+
+
+        // JAVAFX (UI update)
         if (isTreeViewRootParentFocused) {
             // fxml
             invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());
