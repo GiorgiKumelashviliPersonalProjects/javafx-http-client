@@ -239,6 +239,17 @@ public class RequestEntity {
         return null;
     }
 
+    public static void renameByIdDb(int id, String newName) throws SQLException {
+        String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?"
+                .formatted(RequestEntity.TABLE_NAME, RequestEntity.NAME_COLUMN_NAME, RequestEntity.ID_COLUMN_NAME);
+
+        DatabaseConnection.executeCallbackPrepared(updateQuery, stmt -> {
+            stmt.setString(1, newName);
+            stmt.setString(2, String.valueOf(id));
+            stmt.executeUpdate();
+        });
+    }
+
     public static void deleteByIdDb(int id) throws SQLException {
         String deleteQuery = "DELETE FROM %s WHERE %s = ?".formatted(RequestEntity.TABLE_NAME, RequestEntity.ID_COLUMN_NAME);
 

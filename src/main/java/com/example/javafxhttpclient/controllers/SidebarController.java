@@ -110,7 +110,11 @@ public class SidebarController implements Initializable {
                 String newName = renameTreeItemModalWindow.getNewName();
 
                 if (Util.isStringValid(newName)) {
-                    renameTreeItemToSpecificLevel(newName);
+                    try {
+                        renameTreeItemToSpecificLevel(newName);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         } catch (IOException e) {
@@ -210,9 +214,12 @@ public class SidebarController implements Initializable {
         }
     }
 
-    private void renameTreeItemToSpecificLevel(String newName) {
+    private void renameTreeItemToSpecificLevel(String newName) throws SQLException {
         SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView.getSelectionModel().getSelectedItem();
         int id = selectedTreeItem.getId();
+
+        // SQL
+        RequestEntity.renameByIdDb(id, newName);
 
         // set fxml
         selectedTreeItem.setValue(newName);
