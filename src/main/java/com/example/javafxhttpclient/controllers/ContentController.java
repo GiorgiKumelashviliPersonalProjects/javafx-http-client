@@ -298,7 +298,11 @@ public class ContentController implements Initializable {
                     Objects.requireNonNull(dataEntity.getRequestDataEntity()).setUrl(newValue);
 
                     try {
-                        RequestDataEntity.updateColumnUrl(dataEntity.getRequestDataEntity().getId(), newValue);
+                        RequestDataEntity.updateColumn(
+                                dataEntity.getRequestDataEntity().getId(),
+                                RequestDataEntity.URL_COLUMN_NAME,
+                                newValue
+                        );
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -323,9 +327,10 @@ public class ContentController implements Initializable {
                             System.out.println(HttpMethods.valueOf(newValue));
 
 
-                            RequestDataEntity.updateColumnMethod(
+                            RequestDataEntity.updateColumn(
                                     dataEntity.getRequestDataEntity().getId(),
-                                    HttpMethods.valueOf(newValue)
+                                    RequestDataEntity.METHOD_COLUMN_NAME,
+                                    newValue
                             );
                         } catch (SQLException e) {
                             throw new RuntimeException(e);

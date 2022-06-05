@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * TODO -> request data: method, url, json, headers, query
+ * TODO -> request data: json, headers, query
  * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
  *
  * TODO -> menu bar about

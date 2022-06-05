@@ -213,23 +213,12 @@ public class RequestDataEntity {
         return null;
     }
 
-    public static void updateColumnUrl(int id, String newUrl) throws SQLException {
+    public static void updateColumn(int id, String columnName, String value) throws SQLException {
         String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?"
-                .formatted(RequestDataEntity.TABLE_NAME, RequestDataEntity.URL_COLUMN_NAME, RequestDataEntity.ID_COLUMN_NAME);
+                .formatted(RequestDataEntity.TABLE_NAME, columnName, RequestDataEntity.ID_COLUMN_NAME);
 
         DatabaseConnection.executeCallbackPrepared(updateQuery, stmt -> {
-            stmt.setString(1, newUrl);
-            stmt.setInt(2, id);
-            stmt.executeUpdate();
-        });
-    }
-
-    public static void updateColumnMethod(int id, HttpMethods newMethod) throws SQLException {
-        String updateQuery = "UPDATE %s SET %s = ? WHERE %s = ?"
-                .formatted(RequestDataEntity.TABLE_NAME, RequestDataEntity.METHOD_COLUMN_NAME, RequestDataEntity.ID_COLUMN_NAME);
-
-        DatabaseConnection.executeCallbackPrepared(updateQuery, stmt -> {
-            stmt.setString(1, String.valueOf(newMethod));
+            stmt.setString(1, value);
             stmt.setInt(2, id);
             stmt.executeUpdate();
         });
