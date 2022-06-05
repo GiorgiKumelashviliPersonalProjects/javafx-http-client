@@ -1,17 +1,14 @@
 package com.example.javafxhttpclient.entities;
 
-import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
 import com.example.javafxhttpclient.core.misc.treeItems.FolderTreeItem;
 import com.example.javafxhttpclient.core.misc.treeItems.RequestTreeItem;
 import com.example.javafxhttpclient.core.misc.treeItems.SavedRequestTreeItemAbstract;
 import com.example.javafxhttpclient.core.utils.Constants;
-import com.example.javafxhttpclient.core.utils.Util;
 import com.example.javafxhttpclient.db.DatabaseConnection;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -194,5 +191,52 @@ public class RequestEntity {
         });
 
         return tempRequestEntitiesList;
+    }
+
+    public static RequestEntity insertNewEntityInDb(
+            SavedTreeItemType newType,
+            String newName,
+            Integer parentId,
+            boolean returnValue
+    ) throws SQLException {
+        String query = "INSERT INTO %s (%s, %s, %s) values (?, ?, ?)"
+                .formatted(
+                        RequestEntity.TABLE_NAME,
+                        RequestEntity.REQUEST_ENTITY_ID_COLUMN_NAME,
+                        RequestEntity.TYPE_COLUMN_NAME,
+                        RequestEntity.NAME_COLUMN_NAME
+                );
+
+        DatabaseConnection.executeCallbackPrepared(query, stmt -> {
+            stmt.setString(1, parentId != null ? String.valueOf(parentId) : null);
+            stmt.setString(2, String.valueOf(newType));
+            stmt.setString(3, newName);
+            stmt.executeUpdate();
+        });
+
+        if (returnValue) {
+            String selectLastQuery = "SELECT * FROM %s WHERE ID = (SELECT MAX(%s)  FROM %s);"
+                    .formatted(RequestEntity.TABLE_NAME, RequestEntity.ID_COLUMN_NAME, RequestEntity.TABLE_NAME);
+
+            final RequestEntity[] temp = new RequestEntity[1];
+
+            DatabaseConnection.executeSelectClbck(stmt -> {
+                ResultSet lastInserted = stmt.executeQuery(selectLastQuery);
+
+                while (lastInserted.next()) {
+                    int id = lastInserted.getInt(RequestEntity.ID_COLUMN_NAME);
+                    int requestEntityId = lastInserted.getInt(RequestEntity.REQUEST_ENTITY_ID_COLUMN_NAME);
+                    SavedTreeItemType type = SavedTreeItemType.valueOf(lastInserted.getString(RequestEntity.TYPE_COLUMN_NAME));
+                    String name = lastInserted.getString(RequestEntity.NAME_COLUMN_NAME);
+
+                    // create temp {RequestEntity}
+                    temp[0] = new RequestEntity(id, requestEntityId, type, name);
+                }
+            });
+
+            return temp[0];
+        }
+
+        return null;
     }
 }

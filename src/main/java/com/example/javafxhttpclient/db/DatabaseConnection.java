@@ -3,6 +3,7 @@ package com.example.javafxhttpclient.db;
 import com.example.javafxhttpclient.core.utils.Constants;
 import com.example.javafxhttpclient.core.utils.FileManipulator;
 import com.example.javafxhttpclient.core.utils.GeneralCallable;
+import com.example.javafxhttpclient.core.utils.GeneralCallablePrepared;
 import com.example.javafxhttpclient.entities.RequestDataEntity;
 import com.example.javafxhttpclient.entities.RequestEntity;
 import com.example.javafxhttpclient.exceptions.DatabaseNotFoundException;
@@ -48,6 +49,18 @@ public class DatabaseConnection {
         try (
                 Connection databaseConnection = DatabaseConnection.getDbConnection();
                 Statement statement = databaseConnection.createStatement()
+        ) {
+            callable.onCallbackDb(statement);
+        } catch (DatabaseNotFoundException | SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    public static void executeCallbackPrepared(String query, GeneralCallablePrepared callable) throws SQLException {
+        try (
+                Connection databaseConnection = DatabaseConnection.getDbConnection();
+                PreparedStatement statement = databaseConnection.prepareStatement(query)
         ) {
             callable.onCallbackDb(statement);
         } catch (DatabaseNotFoundException | SQLException e) {

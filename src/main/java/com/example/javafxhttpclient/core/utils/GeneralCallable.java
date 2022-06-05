@@ -6,3 +6,4 @@ import java.sql.Statement;
 public interface GeneralCallable {
     void onCallbackDb(Statement statement) throws SQLException;
 }
+

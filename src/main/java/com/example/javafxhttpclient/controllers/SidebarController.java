@@ -2,6 +2,7 @@ package com.example.javafxhttpclient.controllers;
 
 import com.example.javafxhttpclient.core.enums.HttpMethods;
 import com.example.javafxhttpclient.core.enums.SavedTreeItemType;
+import com.example.javafxhttpclient.core.misc.treeItems.RequestTreeItem;
 import com.example.javafxhttpclient.core.modals.AddTreeItemModalWindow;
 import com.example.javafxhttpclient.core.modals.CheckModalWindow;
 import com.example.javafxhttpclient.core.modals.RenameTreeItemModalWindow;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -85,21 +87,33 @@ public class SidebarController implements Initializable {
                 if (newType != null && Util.isStringValid(newName)) {
                     //FIXME problem here
                     //====================================================
-                    RequestEntity newRootItem = new RequestEntity(
-                            Util.randInt(1000),
-                            0,
-                            newType,
-                            newName
-                    );
-                    RequestDataEntity newRequestDataEntity = new RequestDataEntity(
-                            Util.randInt(3000000),
-                            Util.randInt(3000000),
-                            "",
-                            HttpMethods.GET
-                    );
-                    //====================================================
-                    newRootItem.setRequestDataEntity(newRequestDataEntity);
-                    addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
+                    try {
+                        Integer parentId = null;
+
+                        if (!isTreeViewRootParentFocused) {
+                            // edge case where request is created inside folder, and we need parent id
+                            SavedRequestTreeItemAbstract selectedTreeItem = (SavedRequestTreeItemAbstract) rootTreeView
+                                    .getSelectionModel()
+                                    .getSelectedItem();
+
+                            if (selectedTreeItem.getClass().equals(FolderTreeItem.class)) {
+                                // this means its inside folder
+                                parentId = selectedTreeItem.getId();
+                            }
+                        }
+
+                        RequestEntity newRootItem = RequestEntity.insertNewEntityInDb(newType, newName, parentId, true);
+
+                        if (newType == SavedTreeItemType.REQUEST) {
+                            RequestDataEntity newRequestDataEntity = RequestDataEntity
+                                    .insertNewEntityInDb(newRootItem.getId(), "", HttpMethods.GET, true);
+                            newRootItem.setRequestDataEntity(newRequestDataEntity);
+                        }
+
+                        addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         } catch (IOException e) {
@@ -148,8 +162,6 @@ public class SidebarController implements Initializable {
     }
 
     private void addTreeItemToSpecificLevel(RequestEntity item, boolean isTreeViewRootParentFocused) {
-        System.out.println(isTreeViewRootParentFocused);
-
         if (isTreeViewRootParentFocused) {
             // fxml
             invisibleRootComponent.getChildren().addAll(item.getFxmlComponent());

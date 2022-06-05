@@ -162,4 +162,51 @@ public class RequestDataEntity {
 
         return requestDataEntitiesListTemp;
     }
+
+    public static RequestDataEntity insertNewEntityInDb(
+            int requestEntityIdValue,
+            String newUrl,
+            HttpMethods newMethod,
+            boolean returnValue
+    ) throws SQLException {
+        String query = "INSERT INTO %s (%s, %s, %s) values (?, ?, ?)"
+                .formatted(
+                        RequestDataEntity.TABLE_NAME,
+                        RequestDataEntity.REQUEST_ENTITY_ID_COLUMN_NAME,
+                        RequestDataEntity.URL_COLUMN_NAME,
+                        RequestDataEntity.METHOD_COLUMN_NAME
+                );
+
+        DatabaseConnection.executeCallbackPrepared(query, stmt -> {
+            stmt.setInt(1, requestEntityIdValue);
+            stmt.setString(2, newUrl);
+            stmt.setString(3, String.valueOf(newMethod));
+            stmt.executeUpdate();
+        });
+
+        if (returnValue) {
+            String selectLastQuery = "SELECT * FROM %s WHERE ID = (SELECT MAX(%s)  FROM %s);"
+                    .formatted(RequestDataEntity.TABLE_NAME, RequestDataEntity.ID_COLUMN_NAME, RequestDataEntity.TABLE_NAME);
+
+            final RequestDataEntity[] temp = new RequestDataEntity[1];
+
+            DatabaseConnection.executeSelectClbck(stmt -> {
+                ResultSet lastInserted = stmt.executeQuery(selectLastQuery);
+
+                while (lastInserted.next()) {
+                    int id = lastInserted.getInt(RequestDataEntity.ID_COLUMN_NAME);
+                    int requestEntityId = lastInserted.getInt(RequestDataEntity.REQUEST_ENTITY_ID_COLUMN_NAME);
+                    String requestUrl = lastInserted.getString(RequestDataEntity.URL_COLUMN_NAME);
+                    HttpMethods method = HttpMethods.valueOf(lastInserted.getString(RequestDataEntity.METHOD_COLUMN_NAME));
+
+                    // create temp {RequestDataEntity}
+                    temp[0] = new RequestDataEntity(id, requestEntityId, requestUrl, method);
+                }
+            });
+
+            return temp[0];
+        }
+
+        return null;
+    }
 }
