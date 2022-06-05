@@ -1,6 +1,8 @@
 package com.example.javafxhttpclient.core.misc.codearea;
 
+import com.example.javafxhttpclient.core.utils.Util;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.IOException;
@@ -48,7 +50,7 @@ public class EditorArea extends CodeArea {
             try {
                 formattedText = String.valueOf(formatter.format(text));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                Util.showAlertModal(Alert.AlertType.ERROR, "Cannot format json sorry");
             }
         }
 

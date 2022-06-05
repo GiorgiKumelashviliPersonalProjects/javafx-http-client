@@ -16,10 +16,13 @@ module com.example.javafxhttpclient {
     requires org.xerial.sqlitejdbc;
 
     requires event.bus;
+    requires com.google.gson;
 
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
     requires annotations;
+
+    exports com.example.javafxhttpclient.exceptions;
 
     exports com.example.javafxhttpclient.core.misc.codearea;
     exports com.example.javafxhttpclient.core.enums;

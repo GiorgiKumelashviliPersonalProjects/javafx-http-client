@@ -83,9 +83,21 @@ public class SidebarController implements Initializable {
                 SavedTreeItemType newType = addTreeItemModalWindow.getType();
 
                 if (newType != null && Util.isStringValid(newName)) {
-                    int randomId = Util.randInt(1000);
-                    RequestEntity newRootItem = new RequestEntity(randomId, newType, newName);
-                    RequestDataEntity newRequestDataEntity = new RequestDataEntity("", HttpMethods.GET);
+                    //FIXME problem here
+                    //====================================================
+                    RequestEntity newRootItem = new RequestEntity(
+                            Util.randInt(1000),
+                            0,
+                            newType,
+                            newName
+                    );
+                    RequestDataEntity newRequestDataEntity = new RequestDataEntity(
+                            Util.randInt(3000000),
+                            Util.randInt(3000000),
+                            "",
+                            HttpMethods.GET
+                    );
+                    //====================================================
                     newRootItem.setRequestDataEntity(newRequestDataEntity);
                     addTreeItemToSpecificLevel(newRootItem, isTreeViewRootParentFocused);
                 }
