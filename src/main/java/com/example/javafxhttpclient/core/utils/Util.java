@@ -123,9 +123,9 @@ public class Util {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
-    public static String deserializeJson(String json) {
-        return json.substring(1, json.length() - 1).replaceAll("\\\\\"", "\"");
-    }
+//    public static String deserializeJson(String json) {
+//        return json.substring(1, json.length() - 1).replaceAll("\\\\\"", "\"");
+//    }
 
     public static Map<String, String> getMapFromJson(String json) {
         Map<String, Object> retMap = new Gson().fromJson(json, new TypeToken<HashMap<String, Object>>() {}.getType());

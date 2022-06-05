@@ -147,11 +147,11 @@ public class RequestDataEntity {
                 String nullableQueryJson = requestDataEntitiesData.getString(RequestDataEntity.QUERIES_COLUMN_NAME);
 
                 if (nullableHeaderJson != null && !nullableHeaderJson.isEmpty()) {
-                    headerData = Util.getMapFromJson(Util.deserializeJson(nullableHeaderJson));
+                    headerData = Util.getMapFromJson(nullableHeaderJson);
                 }
 
                 if (nullableQueryJson != null && !nullableQueryJson.isEmpty()) {
-                    queryData = Util.getMapFromJson(Util.deserializeJson(nullableQueryJson));
+                    queryData = Util.getMapFromJson(nullableQueryJson);
                 }
 
                 // create temp {RequestDataEntity}

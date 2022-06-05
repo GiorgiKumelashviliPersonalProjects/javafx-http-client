@@ -10,6 +10,7 @@ import com.example.javafxhttpclient.core.utils.Util;
 import com.example.javafxhttpclient.entities.RequestDataEntity;
 import com.example.javafxhttpclient.entities.RequestEntity;
 import com.example.javafxhttpclient.exceptions.NoJsonResponseException;
+import com.google.gson.Gson;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -382,8 +383,38 @@ public class ContentController implements Initializable {
             RequestEntity dataEntity = sidebarController.findItem(activeId);
 
             if (dataEntity != null && dataEntity.getRequestDataEntity() != null) {
-                dataEntity.getRequestDataEntity().setHeaderData(headersTabController.getNameAndValues());
-                dataEntity.getRequestDataEntity().setQueryData(queryTabController.getNameAndValues());
+                Gson gson = new Gson();
+
+                var headerValues = headersTabController.getNameAndValues();
+                var queryValues = queryTabController.getNameAndValues();
+
+
+                // SQL
+                try {
+                    RequestDataEntity.updateColumn(
+                            dataEntity.getRequestDataEntity().getId(),
+                            RequestDataEntity.HEADERS_COLUMN_NAME,
+                            gson.toJson(headerValues)
+                    );
+
+                    RequestDataEntity.updateColumn(
+                            dataEntity.getRequestDataEntity().getId(),
+                            RequestDataEntity.QUERIES_COLUMN_NAME,
+                            gson.toJson(queryValues)
+                    );
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                // FXML, STATE
+                dataEntity.getRequestDataEntity().setHeaderData(headerValues);
+                dataEntity.getRequestDataEntity().setQueryData(queryValues);
+
+
+
+                System.out.println(headersTabController.getNameAndValues());
+                System.out.println(queryTabController.getNameAndValues());
             }
         }).restart();
     }

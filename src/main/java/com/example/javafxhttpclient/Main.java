@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * TODO -> request data: json, headers, query
- * TODO -> save everything in local sqlite using jdbc and add when exiting show alert
- *
  * TODO -> menu bar about
  * TODO -> shortcut on (ctrl + enter) on sending
  * TODO -> shortcut on (ctrl + L) on formatting json
