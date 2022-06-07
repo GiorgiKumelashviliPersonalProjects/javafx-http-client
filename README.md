@@ -16,7 +16,9 @@ _Inspired by Insomnia_
 
 ---
 # Demo ⚡
-![Demo](screenshots/first_demo.png)
+![Demo](screenshots/demo.gif)
+
+[//]: # (![Demo]&#40;screenshots/first_demo.png&#41;)
 
 ---
 
